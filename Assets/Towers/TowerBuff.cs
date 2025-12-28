@@ -2,50 +2,38 @@ using UnityEngine;
 
 public class TowerBuff : MonoBehaviour
 {
-    public float damageMultiplier = 2f;
+    public float radius = 3f;
+    public float damageMultiplier = 1.5f;
 
-    private CircleCollider2D radiusCollider;
-    private SpriteRenderer radiusVisual;
+    private PlayerCursor cursor;
+    private bool isActive;
 
-    void Awake()
+    void Start()
     {
-        radiusCollider = GetComponent<CircleCollider2D>();
-        radiusVisual = GetComponentInChildren<SpriteRenderer>();
-
-        // Scale visual to match collider exactly
-        float diameter = radiusCollider.radius * 2f;
-        radiusVisual.transform.localScale = new Vector3(diameter, diameter, 1f);
-
-        radiusVisual.enabled = false;
+        cursor = FindFirstObjectByType<PlayerCursor>();
     }
 
-    void OnMouseEnter()
+    void Update()
     {
-        radiusVisual.enabled = true;
-    }
+        float dist = Vector2.Distance(cursor.Position, transform.position);
 
-    void OnMouseExit()
-    {
-        radiusVisual.enabled = false;
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        PlayerCursor cursor = other.GetComponent<PlayerCursor>();
-        if (cursor != null)
+        if (dist <= radius && !isActive)
         {
-            cursor.AddMultiplier(damageMultiplier);
-            Debug.Log("dmg buff on");
+            cursor.SetMultiplier(damageMultiplier);
+            isActive = true;
+            Debug.Log("Buff ON");
+        }
+        else if (dist > radius && isActive)
+        {
+            cursor.SetMultiplier(1f);
+            isActive = false;
+            Debug.Log("Buff OFF");
         }
     }
 
-    void OnTriggerExit2D(Collider2D other)
+    void OnDrawGizmosSelected()
     {
-        PlayerCursor cursor = other.GetComponent<PlayerCursor>();
-        if (cursor != null)
-        {
-            cursor.RemoveMultiplier(damageMultiplier);
-            Debug.Log("dmg buff off");
-        }
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, radius);
     }
 }

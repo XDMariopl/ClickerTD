@@ -5,10 +5,12 @@ public class PlayerCursor : MonoBehaviour
     public float baseDamage = 1f;
     private float damageMultiplier = 1f;
 
+    public Vector2 Position => transform.position;
+
     void Update()
     {
         Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        pos.z = 0f;
+        pos.z = 0;
         transform.position = pos;
     }
 
@@ -17,13 +19,8 @@ public class PlayerCursor : MonoBehaviour
         return Mathf.RoundToInt(baseDamage * damageMultiplier);
     }
 
-    public void AddMultiplier(float value)
+    public void SetMultiplier(float value)
     {
-        damageMultiplier *= value;
-    }
-
-    public void RemoveMultiplier(float value)
-    {
-        damageMultiplier /= value;
+        damageMultiplier = value;
     }
 }

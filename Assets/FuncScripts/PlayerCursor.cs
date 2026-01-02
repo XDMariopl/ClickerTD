@@ -1,26 +1,38 @@
+using System.Collections.Generic;
 using UnityEngine;
+using Effects;
 
 public class PlayerCursor : MonoBehaviour
 {
-    public float baseDamage = 1f;
-    private float damageMultiplier = 1f;
+    public int baseDamage = 1;
 
-    public Vector2 Position => transform.position;
+    private int hitCounter = 0;
+    private List<IHitEffect> effects = new();
 
-    void Update()
+    public void RegisterEffect(IHitEffect effect)
     {
-        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        pos.z = 0;
-        transform.position = pos;
+        effects.Add(effect);
     }
 
-    public int GetDamage()
+    public void UnregisterEffect(IHitEffect effect)
     {
-        return Mathf.RoundToInt(baseDamage * damageMultiplier);
+        effects.Remove(effect);
     }
 
-    public void SetMultiplier(float value)
+    public void HitEnemy(EnemyHealth enemy)
     {
-        damageMultiplier = value;
+        hitCounter++;
+
+        HitContext context = new HitContext
+        {
+            hitCount = hitCounter,
+            damage = baseDamage,
+            target = enemy
+        };
+
+        foreach (var effect in effects)
+            effect.OnHit(context);
+
+        enemy.TakeDamage(context.damage);
     }
 }

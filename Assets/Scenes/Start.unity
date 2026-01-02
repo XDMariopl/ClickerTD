@@ -5535,6 +5535,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: BaseTower
       objectReference: {fileID: 0}
+    - target: {fileID: 3868769957030935717, guid: 199f731bc089e1845ac49b9a4967a821, type: 3}
+      propertyPath: levels.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3868769957030935717, guid: 199f731bc089e1845ac49b9a4967a821, type: 3}
+      propertyPath: levels.Array.data[0].everyN
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3868769957030935717, guid: 199f731bc089e1845ac49b9a4967a821, type: 3}
+      propertyPath: levels.Array.data[1].everyN
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3868769957030935717, guid: 199f731bc089e1845ac49b9a4967a821, type: 3}
+      propertyPath: levels.Array.data[0].multiplier
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3868769957030935717, guid: 199f731bc089e1845ac49b9a4967a821, type: 3}
+      propertyPath: levels.Array.data[1].multiplier
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4885410390828462075, guid: 199f731bc089e1845ac49b9a4967a821, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -5711,6 +5731,10 @@ PrefabInstance:
     - target: {fileID: 8224178077884405166, guid: 7de0906111ece6f45ab9f8d23a41e7dd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8759930673240258307, guid: 7de0906111ece6f45ab9f8d23a41e7dd, type: 3}
+      propertyPath: maxHP
+      value: 200
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -1,12 +1,15 @@
 using UnityEngine;
+using Effects;
 
 public class TowerBuff : MonoBehaviour
 {
+    public TowerLevel[] levels;
     public float radius = 3f;
-    public float damageMultiplier = 1.5f;
 
+    private int currentLevel = 1;
     private PlayerCursor cursor;
-    private bool isActive;
+    private IHitEffect activeEffect;
+    private bool active;
 
     void Start()
     {
@@ -15,25 +18,39 @@ public class TowerBuff : MonoBehaviour
 
     void Update()
     {
-        float dist = Vector2.Distance(cursor.Position, transform.position);
+        float dist = Vector2.Distance(cursor.transform.position, transform.position);
 
-        if (dist <= radius && !isActive)
-        {
-            cursor.SetMultiplier(damageMultiplier);
-            isActive = true;
-            Debug.Log("Buff ON");
-        }
-        else if (dist > radius && isActive)
-        {
-            cursor.SetMultiplier(1f);
-            isActive = false;
-            Debug.Log("Buff OFF");
-        }
+        if (dist <= radius && !active)
+            Activate();
+        else if (dist > radius && active)
+            Deactivate();
     }
 
-    void OnDrawGizmosSelected()
+    void Activate()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, radius);
+        TowerLevel lvl = levels[currentLevel];
+
+        activeEffect = CreateEffect(lvl);
+        cursor.RegisterEffect(activeEffect);
+        active = true;
+    }
+
+    void Deactivate()
+    {
+        cursor.UnregisterEffect(activeEffect);
+        activeEffect = null;
+        active = false;
+    }
+
+    IHitEffect CreateEffect(TowerLevel lvl)
+    {
+        switch (lvl.effectType)
+        {
+            case TowerEffectType.NthHitDamage:
+                return new NthHitDamageEffect(lvl.everyN, lvl.multiplier);
+
+        }
+
+        return null;
     }
 }

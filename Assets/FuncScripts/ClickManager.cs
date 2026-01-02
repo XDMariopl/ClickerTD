@@ -18,10 +18,10 @@ public class ClickManager : MonoBehaviour
 
             if (!hit.collider) return;
 
-            DmgClick dmg = hit.collider.GetComponent<DmgClick>();
-            if (dmg != null)
+            EnemyHealth enemy = hit.collider.GetComponent<EnemyHealth>();
+            if (enemy != null)
             {
-                dmg.ApplyDamage(cursor.GetDamage());
+                cursor.HitEnemy(enemy);
             }
         }
     }

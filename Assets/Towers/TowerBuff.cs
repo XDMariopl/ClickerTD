@@ -6,7 +6,7 @@ public class TowerBuff : MonoBehaviour
     public TowerLevel[] levels;
     public float radius = 3f;
 
-    private int currentLevel = 1;
+    private int currentLevel = 0;
     private PlayerCursor cursor;
     private IHitEffect activeEffect;
     private bool active;
@@ -53,4 +53,10 @@ public class TowerBuff : MonoBehaviour
 
         return null;
     }
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, radius);
+    }
+
 }

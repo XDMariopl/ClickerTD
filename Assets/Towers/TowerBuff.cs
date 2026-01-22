@@ -17,6 +17,8 @@ public class TowerBuff : MonoBehaviour
     private IHitEffect activeEffect;
     private bool active;
 
+    public bool isPreview = false;
+
     private LineRenderer circle;
 
     void Start()
@@ -28,6 +30,8 @@ public class TowerBuff : MonoBehaviour
 
     void Update()
     {
+        if (isPreview) return;
+
         float dist = Vector2.Distance(cursor.transform.position, transform.position);
 
         if (dist <= radius && !active)
@@ -38,31 +42,55 @@ public class TowerBuff : MonoBehaviour
         circle.enabled = active;
     }
 
+
     void Activate()
     {
+        if (active) return;
+
         TowerLevel lvl = levels[currentLevel];
+
         activeEffect = CreateEffect(lvl);
         cursor.RegisterEffect(activeEffect);
+
         active = true;
     }
 
+
     void Deactivate()
     {
+        if (!active) return;
+
         cursor.UnregisterEffect(activeEffect);
         activeEffect = null;
+
         active = false;
     }
 
+    void OnDestroy()
+    {
+        if (active && cursor != null && activeEffect != null)
+        {
+            cursor.UnregisterEffect(activeEffect);
+            activeEffect = null;
+            active = false;
+        }
+    }
+
+
+
     IHitEffect CreateEffect(TowerLevel lvl)
     {
+        TowerSFX sfx = GetComponent<TowerSFX>(); // optional
+
         switch (lvl.effectType)
         {
             case TowerEffectType.NthHitDamage:
-                return new NthHitDamageEffect(lvl.everyN, lvl.multiplier);
+                return new NthHitDamageEffect(lvl.everyN, lvl.multiplier, sfx);
         }
 
         return null;
     }
+
 
     // ---------- RADIUS VISUAL ----------
 

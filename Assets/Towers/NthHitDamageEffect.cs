@@ -5,22 +5,29 @@ public class NthHitDamageEffect : IHitEffect
 {
     private int everyN;
     private float multiplier;
+    private int localHitCounter = 0;
+    private TowerSFX towerSFX;
 
-    public NthHitDamageEffect(int everyN, float multiplier)
+    // Pass TowerSFX when creating the effect
+    public NthHitDamageEffect(int everyN, float multiplier, TowerSFX sfx = null)
     {
         this.everyN = everyN;
         this.multiplier = multiplier;
+        this.towerSFX = sfx;
     }
 
     public void OnHit(HitContext context)
     {
-        if (everyN <= 0) return;
+        localHitCounter++;
 
-        if (context.hitCount % everyN == 0)
+        if (localHitCounter % everyN == 0)
         {
-            Debug.Log("NthHit TRIGGERED");
             context.damage = Mathf.RoundToInt(context.damage * multiplier);
+
+            // Play SFX
+            towerSFX?.PlayAbilitySFX();
+
+            Debug.Log($"NthHit triggered ({localHitCounter})");
         }
     }
-
 }

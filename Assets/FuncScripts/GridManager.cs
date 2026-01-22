@@ -10,11 +10,13 @@ public class GridManager : MonoBehaviour
     [Header("Grid Origin")]
     public Vector2 origin = Vector2.zero;
 
+    private bool[,] pathCells;
     private bool[,] occupied;
 
     void Awake()
     {
         occupied = new bool[width, height];
+        pathCells = new bool[width, height];
     }
 
     // ---------- WORLD GRID ----------
@@ -42,7 +44,12 @@ public class GridManager : MonoBehaviour
 
     public bool IsOccupied(Vector2Int gridPos)
     {
-        return occupied[gridPos.x, gridPos.y];
+        return occupied[gridPos.x, gridPos.y] || pathCells[gridPos.x, gridPos.y];
+    }
+
+    public void SetPath(Vector2Int gridPos)
+    {
+        pathCells[gridPos.x, gridPos.y] = true;
     }
 
     public void SetOccupied(Vector2Int gridPos, bool value)
@@ -77,30 +84,49 @@ public class GridManager : MonoBehaviour
         while (true)
         {
             if (IsInsideGrid(a))
-                SetOccupied(a, true);
+                SetPath(a);
 
             if (a == b)
                 break;
 
             int e2 = 2 * err;
-            if (e2 > -dy)
-            {
-                err -= dy;
-                a.x += sx;
-            }
-            if (e2 < dx)
-            {
-                err += dx;
-                a.y += sy;
-            }
+            if (e2 > -dy) { err -= dy; a.x += sx; }
+            if (e2 < dx) { err += dx; a.y += sy; }
         }
     }
+
 
 
     // ---------- DEBUG VISUAL ----------
     void OnDrawGizmos()
     {
-        Gizmos.color = Color.gray;
+        if (width <= 0 || height <= 0)
+            return;
+
+        Color gridColor = Color.gray;
+        Color pathColor = new Color(0.5f, 0f, 0f, 0.6f);
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                Vector3 center = new Vector3(
+                    origin.x + x * cellSize + cellSize / 2f,
+                    origin.y + y * cellSize + cellSize / 2f,
+                    0
+                );
+
+                Vector3 size = Vector3.one * cellSize;
+
+                if (pathCells != null && pathCells[x, y])
+                {
+                    Gizmos.color = pathColor;
+                    Gizmos.DrawCube(center, size);
+                }
+            }
+        }
+
+        Gizmos.color = gridColor;
 
         for (int x = 0; x <= width; x++)
         {
@@ -116,6 +142,7 @@ public class GridManager : MonoBehaviour
             Gizmos.DrawLine(from, to);
         }
     }
+
 
     public Vector2Int GetMouseGridPosition(Camera cam)
     {

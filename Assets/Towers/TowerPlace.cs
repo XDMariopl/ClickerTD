@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TowerPlacer : MonoBehaviour
+public class TowerPlace : MonoBehaviour
 {
     public GridManager grid;
     public Camera cam;
@@ -41,14 +41,28 @@ public class TowerPlacer : MonoBehaviour
 
     public void StartPlacing(TowerData tower)
     {
-        currentTower = tower;
+        currentTower = tower; // MISSING LINE
+
         preview = Instantiate(tower.prefab, towerParent);
+
+        foreach (var buff in preview.GetComponentsInChildren<TowerBuff>())
+        {
+            buff.isPreview = true;
+        }
+
         SetPreviewAlpha(0.5f);
         placing = true;
     }
 
+
     void PlaceTower()
     {
+        if (currentTower == null)
+        {
+            Debug.LogError("PlaceTower called but currentTower is null!");
+            return;
+        }
+
         GameObject tower = Instantiate(currentTower.prefab, towerParent);
         tower.transform.position = grid.GridToWorld(currentGridPos);
 
@@ -57,6 +71,7 @@ public class TowerPlacer : MonoBehaviour
         Destroy(preview);
         placing = false;
     }
+
 
     void Cancel()
     {

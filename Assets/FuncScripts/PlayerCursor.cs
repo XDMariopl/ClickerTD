@@ -6,7 +6,6 @@ public class PlayerCursor : MonoBehaviour
 {
     public int baseDamage = 1;
 
-    private int hitCounter = 0;
     private List<IHitEffect> effects = new();
 
     void Awake()
@@ -35,19 +34,16 @@ public class PlayerCursor : MonoBehaviour
 
     public void HitEnemy(EnemyHealth enemy)
     {
-        hitCounter++;
-
         HitContext context = new HitContext
         {
-            hitCount = hitCounter,
             damage = baseDamage,
             target = enemy
         };
-        Debug.Log(hitCounter);
 
         foreach (var effect in effects)
             effect.OnHit(context);
 
         enemy.TakeDamage(context.damage);
     }
+
 }

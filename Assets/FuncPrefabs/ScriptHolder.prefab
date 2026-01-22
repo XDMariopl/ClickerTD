@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3183445028214509495}
   - component: {fileID: 5198298570815804361}
   - component: {fileID: 7456140025238484150}
+  - component: {fileID: 4044139912615732842}
   m_Layer: 0
   m_Name: ScriptHolder
   m_TagString: Untagged
@@ -73,3 +74,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firstLevelScene: Map1
   mainMenuScene: Start
+--- !u!114 &4044139912615732842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1925319196621812804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29a1e0263d168684784e5c953e09d67d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicSource: {fileID: 0}
+  tracks:
+  - {fileID: 8300000, guid: 6a83d8997a5d5b741a94e244af37cba8, type: 3}
+  - {fileID: 8300000, guid: d178053300c0a5f429e9d48a15e7f40b, type: 3}
+  - {fileID: 8300000, guid: e3adb891d62d76640897c730ef905612, type: 3}
+  - {fileID: 8300000, guid: 9abb278cfddd08c43af80f4a4047fbc6, type: 3}

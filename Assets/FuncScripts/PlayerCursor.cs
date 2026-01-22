@@ -9,6 +9,11 @@ public class PlayerCursor : MonoBehaviour
     private int hitCounter = 0;
     private List<IHitEffect> effects = new();
 
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     void Update()
     {
         Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

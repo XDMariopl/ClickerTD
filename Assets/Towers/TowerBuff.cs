@@ -3,17 +3,27 @@ using Effects;
 
 public class TowerBuff : MonoBehaviour
 {
+    [Header("Buff Settings")]
+    public float radius = 2.5f;
     public TowerLevel[] levels;
-    public float radius = 3f;
+
+    [Header("Visual")]
+    public Color radiusColor = new Color(0f, 1f, 0f, 0.6f);
+    public float lineWidth = 0.05f;
+    public int segments = 64;
 
     private int currentLevel = 0;
     private PlayerCursor cursor;
     private IHitEffect activeEffect;
     private bool active;
 
+    private LineRenderer circle;
+
     void Start()
     {
         cursor = FindFirstObjectByType<PlayerCursor>();
+        CreateRadiusVisual();
+        circle.enabled = false;
     }
 
     void Update()
@@ -24,12 +34,13 @@ public class TowerBuff : MonoBehaviour
             Activate();
         else if (dist > radius && active)
             Deactivate();
+
+        circle.enabled = active;
     }
 
     void Activate()
     {
         TowerLevel lvl = levels[currentLevel];
-
         activeEffect = CreateEffect(lvl);
         cursor.RegisterEffect(activeEffect);
         active = true;
@@ -48,15 +59,52 @@ public class TowerBuff : MonoBehaviour
         {
             case TowerEffectType.NthHitDamage:
                 return new NthHitDamageEffect(lvl.everyN, lvl.multiplier);
-
         }
 
         return null;
     }
-    void OnDrawGizmos()
+
+    // ---------- RADIUS VISUAL ----------
+
+    void CreateRadiusVisual()
     {
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, radius);
+        GameObject go = new GameObject("RadiusVisual");
+        go.transform.SetParent(transform);
+        go.transform.localPosition = Vector3.zero;
+
+        circle = go.AddComponent<LineRenderer>();
+        circle.useWorldSpace = false;
+        circle.loop = true;
+        circle.positionCount = segments;
+        circle.startWidth = lineWidth;
+        circle.endWidth = lineWidth;
+
+        circle.material = new Material(Shader.Find("Sprites/Default"));
+        circle.startColor = radiusColor;
+        circle.endColor = radiusColor;
+
+        DrawCircle();
     }
 
+    void DrawCircle()
+    {
+        for (int i = 0; i < segments; i++)
+        {
+            float angle = i * Mathf.PI * 2f / segments;
+            Vector3 pos = new Vector3(
+                Mathf.Cos(angle) * radius,
+                Mathf.Sin(angle) * radius,
+                0f
+            );
+            circle.SetPosition(i, pos);
+        }
+    }
+
+#if UNITY_EDITOR
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, radius);
+    }
+#endif
 }

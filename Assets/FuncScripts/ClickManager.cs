@@ -4,6 +4,11 @@ public class ClickManager : MonoBehaviour
 {
     private PlayerCursor cursor;
 
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     void Start()
     {
         cursor = FindFirstObjectByType<PlayerCursor>();

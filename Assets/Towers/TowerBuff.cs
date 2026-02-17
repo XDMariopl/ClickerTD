@@ -86,6 +86,16 @@ public class TowerBuff : MonoBehaviour
         {
             case TowerEffectType.NthHitDamage:
                 return new NthHitDamageEffect(lvl.everyN, lvl.multiplier, sfx);
+
+            case TowerEffectType.ChainDamage:
+                return new ChainHitDamage(
+                    lvl.chainNth,
+                    lvl.chainHits,
+                    lvl.chainDamage,
+                    lvl.chainRadius,
+                    sfx
+                );
+
         }
 
         return null;

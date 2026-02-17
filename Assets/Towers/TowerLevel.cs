@@ -10,6 +10,8 @@ public class TowerLevel
     public float multiplier;
 
     [Header("Chain Damage")]
-    public float chainRadius;
+    public int chainNth;
+    public int chainHits;
     public int chainDamage;
+    public float chainRadius;
 }

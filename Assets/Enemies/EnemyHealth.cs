@@ -4,6 +4,8 @@ public class EnemyHealth : MonoBehaviour
 {
     public int maxHP= 5;
     private int currentHP;
+    public int damageToPlayer = 1;
+    public int moneyDrop = 5;
 
     void Start()
     {
@@ -21,6 +23,9 @@ public class EnemyHealth : MonoBehaviour
     }
     private void Die()
     {
+        if (MoneySystem.Instance != null)
+            MoneySystem.Instance.AddMoney(moneyDrop);
+
         Destroy(gameObject);
     }
 }

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: DoubleTD
   m_EditorClassIdentifier: 
   prefab: {fileID: 1161781003537322576, guid: b82ff60159b775342a0d7923e70f1d31, type: 3}
-  cost: 0
+  cost: 100

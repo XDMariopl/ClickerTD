@@ -37,7 +37,13 @@ public class EnemyMover : MonoBehaviour
 
     void ReachEnd()
     {
+        if (PlayerHealth.Instance != null)
+        {
+            PlayerHealth.Instance.TakeDamage(
+                GetComponent<EnemyHealth>().damageToPlayer
+            );
+        }
+
         Destroy(gameObject);
-        // later: player takes damage / lose life
     }
 }

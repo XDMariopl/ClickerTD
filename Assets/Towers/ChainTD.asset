@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: ChainTD
   m_EditorClassIdentifier: 
   prefab: {fileID: 4996267989437817386, guid: 1df995ef1ce7c92498e81410bcdd8d23, type: 3}
-  cost: 0
+  cost: 150

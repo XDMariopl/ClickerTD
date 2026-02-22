@@ -41,7 +41,13 @@ public class TowerPlace : MonoBehaviour
 
     public void StartPlacing(TowerData tower)
     {
-        currentTower = tower; // MISSING LINE
+        if (!MoneySystem.Instance.CanAfford(tower.cost))
+        {
+            Debug.Log("Not enough money!");
+            return;
+        }
+
+        currentTower = tower;
 
         preview = Instantiate(tower.prefab, towerParent);
 
@@ -60,6 +66,12 @@ public class TowerPlace : MonoBehaviour
         if (currentTower == null)
         {
             Debug.LogError("PlaceTower called but currentTower is null!");
+            return;
+        }
+
+        if (!MoneySystem.Instance.SpendMoney(currentTower.cost))
+        {
+            Debug.Log("Not enough money to place tower!");
             return;
         }
 

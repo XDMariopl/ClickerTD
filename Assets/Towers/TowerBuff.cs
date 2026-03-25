@@ -12,7 +12,7 @@ public class TowerBuff : MonoBehaviour
     public float lineWidth = 0.05f;
     public int segments = 64;
 
-    private int currentLevel = 0;
+    public int currentLevel = 0;
     private PlayerCursor cursor;
     private IHitEffect activeEffect;
     private bool active;
@@ -95,6 +95,18 @@ public class TowerBuff : MonoBehaviour
                     lvl.chainRadius,
                     sfx
                 );
+            case TowerEffectType.BombDamage:
+                return new BombHitDamage(lvl.bombNth, lvl.bombDamage, lvl.bombRadius, sfx);
+
+            case TowerEffectType.SlowEffect:
+                return new SlowHitEffect(lvl.slowPower, lvl.slowRadius, lvl.slowNth, sfx);
+
+            case TowerEffectType.MoneyEffect:
+                return new MoneyHitEffect(lvl.moneyMultiply, lvl.moneyNth, sfx);
+
+            case TowerEffectType.ReverseEffect:
+                return new ReverseHitEffect(lvl.reverseDuration, lvl.reverseNth, sfx);
+
 
         }
 

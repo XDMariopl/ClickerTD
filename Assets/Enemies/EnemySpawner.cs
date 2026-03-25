@@ -10,28 +10,24 @@ public class EnemySpawner : MonoBehaviour
         public int count;
     }
 
+    public bool IsSpawning { get; private set; }
+
     public Path path;
-    public EnemyEntry[] enemies;
 
     public float spawnDelay = 1f;
 
-    void Start()
-    {
-        StartCoroutine(SpawnWave());
-    }
-
     public Transform enemyParent; // assign in Inspector (Canvas or container)
 
-    IEnumerator SpawnWave()
+    public IEnumerator SpawnWave(RoundEntry round)
     {
-        foreach (var entry in enemies)
+        foreach (var entry in round.enemies)
         {
             for (int i = 0; i < entry.count; i++)
             {
                 EnemyMover enemy = Instantiate(
                     entry.prefab,
                     enemyParent,
-                    false // IMPORTANT
+                    false
                 );
 
                 enemy.Init(path);

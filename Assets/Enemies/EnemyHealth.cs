@@ -6,6 +6,7 @@ public class EnemyHealth : MonoBehaviour
     private int currentHP;
     public int damageToPlayer = 1;
     public int moneyDrop = 5;
+    private int moneyMultiplier = 1;
 
     void Start()
     {
@@ -24,8 +25,24 @@ public class EnemyHealth : MonoBehaviour
     private void Die()
     {
         if (MoneySystem.Instance != null)
-            MoneySystem.Instance.AddMoney(moneyDrop);
+            MoneySystem.Instance.AddMoney(moneyDrop * moneyMultiplier);
 
         Destroy(gameObject);
+    }
+
+    public void ApplyMoneyMultiplier(int multiplier)
+    {
+        if (multiplier <= 1) return;
+        moneyMultiplier = Mathf.Max(moneyMultiplier, multiplier);
+    }
+
+    void OnEnable()
+    {
+        EnemyManager.ActiveEnemies.Add(this);
+    }
+
+    void OnDisable()
+    {
+        EnemyManager.ActiveEnemies.Remove(this);
     }
 }

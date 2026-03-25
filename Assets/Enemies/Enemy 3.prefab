@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1554114484668565820
+--- !u!1 &761681649962851709
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,28 +8,28 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2664937732236589248}
-  - component: {fileID: 7054461821552472783}
-  - component: {fileID: 8152772260438669552}
-  - component: {fileID: 2662637685643673157}
-  - component: {fileID: 8688694055051778991}
-  - component: {fileID: 7031793823991304347}
-  - component: {fileID: 5696867637349669123}
+  - component: {fileID: 5821882184512137471}
+  - component: {fileID: 6252915455770770730}
+  - component: {fileID: 5502375828047631949}
+  - component: {fileID: 5428191434951857780}
+  - component: {fileID: 252244923475821224}
+  - component: {fileID: 679823039450496028}
+  - component: {fileID: 6533424651477324709}
   m_Layer: 5
-  m_Name: Enemy 1
+  m_Name: Enemy 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &2664937732236589248
+--- !u!224 &5821882184512137471
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1554114484668565820}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_GameObject: {fileID: 761681649962851709}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -9719.999}
   m_LocalScale: {x: 108.00862, y: 108.00862, z: 108.00862}
   m_ConstrainProportionsScale: 0
@@ -38,31 +38,31 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -906.12, y: -159.83998}
+  m_AnchoredPosition: {x: -1496, y: -91}
   m_SizeDelta: {x: 0.9, y: 0.9}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &7054461821552472783
+--- !u!222 &6252915455770770730
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1554114484668565820}
+  m_GameObject: {fileID: 761681649962851709}
   m_CullTransparentMesh: 1
---- !u!114 &8152772260438669552
+--- !u!114 &5502375828047631949
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1554114484668565820}
+  m_GameObject: {fileID: 761681649962851709}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8773585, g: 0.2027857, b: 0.2027857, a: 1}
+  m_Color: {r: 0.754717, g: 0.73493797, b: 0.18155926, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -79,13 +79,13 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 50
---- !u!58 &2662637685643673157
+--- !u!58 &5428191434951857780
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1554114484668565820}
+  m_GameObject: {fileID: 761681649962851709}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -115,43 +115,43 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.7
---- !u!114 &8688694055051778991
+--- !u!114 &252244923475821224
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1554114484668565820}
+  m_GameObject: {fileID: 761681649962851709}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6da1e9d36a571044884e698a761d5b30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 5
-  damageToPlayer: 1
-  moneyDrop: 5
---- !u!114 &7031793823991304347
+  maxHP: 20
+  damageToPlayer: 5
+  moneyDrop: 16
+--- !u!114 &679823039450496028
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1554114484668565820}
+  m_GameObject: {fileID: 761681649962851709}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b366cbbbda4c204298f5ee3cf71550b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5696867637349669123
+--- !u!114 &6533424651477324709
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1554114484668565820}
+  m_GameObject: {fileID: 761681649962851709}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e417e48170d0ac44bd62b88adac8ade, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1.5
+  speed: 1.8

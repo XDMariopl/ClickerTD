@@ -1,5 +1,9 @@
 public enum TowerEffectType
 {
     NthHitDamage,
-    ChainDamage
+    ChainDamage,
+    BombDamage,
+    SlowEffect,
+    MoneyEffect,
+    ReverseEffect
 }

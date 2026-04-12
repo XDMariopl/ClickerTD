@@ -7,6 +7,8 @@ public class MoneySystem : MonoBehaviour
 
     public int startMoney = 100;
     private int currentMoney;
+    private int totalCollected;
+    private int totalSpent;
 
     [Header("UI")]
     [SerializeField] private TMP_Text moneyText;
@@ -19,6 +21,8 @@ public class MoneySystem : MonoBehaviour
     void Start()
     {
         currentMoney = startMoney;
+        totalCollected = 0;
+        totalSpent = 0;
         UpdateUI();
     }
 
@@ -30,6 +34,7 @@ public class MoneySystem : MonoBehaviour
     public void AddMoney(int amount)
     {
         currentMoney += amount;
+        totalCollected += amount;
         UpdateUI();
     }
 
@@ -39,6 +44,7 @@ public class MoneySystem : MonoBehaviour
             return false;
 
         currentMoney -= amount;
+        totalSpent += amount;
         UpdateUI();
         return true;
     }
@@ -52,5 +58,15 @@ public class MoneySystem : MonoBehaviour
     public int CurrentMoney()
     {
         return currentMoney;
+    }
+
+    public int TotalCollected()
+    {
+        return totalCollected;
+    }
+
+    public int TotalSpent()
+    {
+        return totalSpent;
     }
 }

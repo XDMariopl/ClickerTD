@@ -76,6 +76,40 @@ public class TowerBuff : MonoBehaviour
         }
     }
 
+    public bool CanUpgrade()
+    {
+        return levels != null && currentLevel < levels.Length - 1;
+    }
+
+    public int NextUpgradeCost()
+    {
+        if (!CanUpgrade())
+            return 0;
+
+        return levels[currentLevel + 1].upgradeCost;
+    }
+
+    public bool TryUpgrade()
+    {
+        if (!CanUpgrade())
+            return false;
+
+        int cost = levels[currentLevel + 1].upgradeCost;
+
+        if (MoneySystem.Instance == null || !MoneySystem.Instance.SpendMoney(cost))
+            return false;
+
+        currentLevel++;
+
+        if (active && cursor != null)
+        {
+            cursor.UnregisterEffect(activeEffect);
+            activeEffect = CreateEffect(levels[currentLevel]);
+            cursor.RegisterEffect(activeEffect);
+        }
+
+        return true;
+    }
 
 
     IHitEffect CreateEffect(TowerLevel lvl)

@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 5841852136659622769}
   - component: {fileID: 2040113270056688095}
   - component: {fileID: -1957895284323361749}
+  - component: {fileID: -5826572276215216554}
+  - component: {fileID: 6963917578175061017}
   m_Layer: 5
   m_Name: DoubleTower
   m_TagString: Untagged
@@ -93,6 +95,7 @@ MonoBehaviour:
   radius: 3.5
   levels:
   - effectType: 0
+    upgradeCost: 0
     everyN: 4
     multiplier: 2
     chainNth: 0
@@ -113,8 +116,51 @@ MonoBehaviour:
     reverseDuration: 0
     reverseNth: 0
   - effectType: 0
+    upgradeCost: 300
+    everyN: 3
+    multiplier: 3
+    chainNth: 0
+    chainHits: 0
+    chainDamage: 0
+    chainRadius: 0
+    bombNth: 0
+    bombDamage: 0
+    bombRadius: 0
+    addDamage: 0
+    multiplyDamage: 0
+    addMultiplyRadius: 0
+    slowPower: 0
+    slowRadius: 0
+    slowNth: 0
+    moneyMultiply: 0
+    moneyNth: 0
+    reverseDuration: 0
+    reverseNth: 0
+  - effectType: 0
+    upgradeCost: 650
     everyN: 2
-    multiplier: 2
+    multiplier: 4
+    chainNth: 0
+    chainHits: 0
+    chainDamage: 0
+    chainRadius: 0
+    bombNth: 0
+    bombDamage: 0
+    bombRadius: 0
+    addDamage: 0
+    multiplyDamage: 0
+    addMultiplyRadius: 0
+    slowPower: 0
+    slowRadius: 0
+    slowNth: 0
+    moneyMultiply: 0
+    moneyNth: 0
+    reverseDuration: 0
+    reverseNth: 0
+  - effectType: 0
+    upgradeCost: 980
+    everyN: 2
+    multiplier: 6
     chainNth: 0
     chainHits: 0
     chainDamage: 0
@@ -248,3 +294,61 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-5826572276215216554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161781003537322576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dc805e176bc49840a94f18cee713ade, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!61 &6963917578175061017
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161781003537322576}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0

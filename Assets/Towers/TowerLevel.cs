@@ -5,6 +5,9 @@ public class TowerLevel
 {
     public TowerEffectType effectType;
 
+    [Header("Upgrade")]
+    public int upgradeCost;
+
     [Header("Nth Hit Damage")]
     public int everyN;
     public float multiplier;

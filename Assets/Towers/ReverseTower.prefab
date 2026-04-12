@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 568855861386038472}
   - component: {fileID: 1239409482939964160}
   - component: {fileID: 719707890194235768}
+  - component: {fileID: 6951597205032248379}
   m_Layer: 5
   m_Name: ReverseTower
   m_TagString: Untagged
@@ -93,6 +94,7 @@ MonoBehaviour:
   radius: 3
   levels:
   - effectType: 5
+    upgradeCost: 0
     everyN: 0
     multiplier: 0
     chainNth: 0
@@ -112,6 +114,69 @@ MonoBehaviour:
     moneyNth: 0
     reverseDuration: 0.8
     reverseNth: 4
+  - effectType: 5
+    upgradeCost: 450
+    everyN: 0
+    multiplier: 0
+    chainNth: 0
+    chainHits: 0
+    chainDamage: 0
+    chainRadius: 0
+    bombNth: 0
+    bombDamage: 0
+    bombRadius: 0
+    addDamage: 0
+    multiplyDamage: 0
+    addMultiplyRadius: 0
+    slowPower: 0
+    slowRadius: 0
+    slowNth: 0
+    moneyMultiply: 0
+    moneyNth: 0
+    reverseDuration: 1.1
+    reverseNth: 4
+  - effectType: 5
+    upgradeCost: 700
+    everyN: 0
+    multiplier: 0
+    chainNth: 0
+    chainHits: 0
+    chainDamage: 0
+    chainRadius: 0
+    bombNth: 0
+    bombDamage: 0
+    bombRadius: 0
+    addDamage: 0
+    multiplyDamage: 0
+    addMultiplyRadius: 0
+    slowPower: 0
+    slowRadius: 0
+    slowNth: 0
+    moneyMultiply: 0
+    moneyNth: 0
+    reverseDuration: 1.5
+    reverseNth: 3
+  - effectType: 5
+    upgradeCost: 1300
+    everyN: 0
+    multiplier: 0
+    chainNth: 0
+    chainHits: 0
+    chainDamage: 0
+    chainRadius: 0
+    bombNth: 0
+    bombDamage: 0
+    bombRadius: 0
+    addDamage: 0
+    multiplyDamage: 0
+    addMultiplyRadius: 0
+    slowPower: 0
+    slowRadius: 0
+    slowNth: 0
+    moneyMultiply: 0
+    moneyNth: 0
+    reverseDuration: 1.8
+    reverseNth: 2
   radiusColor: {r: 0, g: 1, b: 0, a: 0.6}
   lineWidth: 0.05
   segments: 64
@@ -228,3 +293,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6951597205032248379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8876357803731642881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dc805e176bc49840a94f18cee713ade, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

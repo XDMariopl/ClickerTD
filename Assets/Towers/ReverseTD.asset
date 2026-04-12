@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: ReverseTD
   m_EditorClassIdentifier: 
   prefab: {fileID: 8876357803731642881, guid: 350b9419a1ce7f94e8804df51b8f12ed, type: 3}
-  cost: 100
+  cost: 350

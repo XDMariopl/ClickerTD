@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: MoneyTD
   m_EditorClassIdentifier: 
   prefab: {fileID: 415504098773316103, guid: f8398c4d20c8cc54d9aa98d6bdd4a595, type: 3}
-  cost: 100
+  cost: 350

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 685020683537624058}
   - component: {fileID: 7694925433088553455}
   - component: {fileID: 8119028144245453056}
+  - component: {fileID: 1573062372565404849}
   m_Layer: 5
   m_Name: SlowTower
   m_TagString: Untagged
@@ -93,6 +94,7 @@ MonoBehaviour:
   radius: 3
   levels:
   - effectType: 3
+    upgradeCost: 0
     everyN: 0
     multiplier: 0
     chainNth: 0
@@ -108,6 +110,69 @@ MonoBehaviour:
     slowPower: 0.2
     slowRadius: 1.5
     slowNth: 4
+    moneyMultiply: 0
+    moneyNth: 0
+    reverseDuration: 0
+    reverseNth: 0
+  - effectType: 3
+    upgradeCost: 360
+    everyN: 0
+    multiplier: 0
+    chainNth: 0
+    chainHits: 0
+    chainDamage: 0
+    chainRadius: 0
+    bombNth: 0
+    bombDamage: 0
+    bombRadius: 0
+    addDamage: 0
+    multiplyDamage: 0
+    addMultiplyRadius: 0
+    slowPower: 0.3
+    slowRadius: 1.8
+    slowNth: 3
+    moneyMultiply: 0
+    moneyNth: 0
+    reverseDuration: 0
+    reverseNth: 0
+  - effectType: 3
+    upgradeCost: 720
+    everyN: 0
+    multiplier: 0
+    chainNth: 0
+    chainHits: 0
+    chainDamage: 0
+    chainRadius: 0
+    bombNth: 0
+    bombDamage: 0
+    bombRadius: 0
+    addDamage: 0
+    multiplyDamage: 0
+    addMultiplyRadius: 0
+    slowPower: 0.4
+    slowRadius: 2
+    slowNth: 3
+    moneyMultiply: 0
+    moneyNth: 0
+    reverseDuration: 0
+    reverseNth: 0
+  - effectType: 3
+    upgradeCost: 980
+    everyN: 0
+    multiplier: 0
+    chainNth: 0
+    chainHits: 0
+    chainDamage: 0
+    chainRadius: 0
+    bombNth: 0
+    bombDamage: 0
+    bombRadius: 0
+    addDamage: 0
+    multiplyDamage: 0
+    addMultiplyRadius: 0
+    slowPower: 0.5
+    slowRadius: 2.2
+    slowNth: 2
     moneyMultiply: 0
     moneyNth: 0
     reverseDuration: 0
@@ -228,3 +293,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1573062372565404849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1756150475951982615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dc805e176bc49840a94f18cee713ade, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: SlowTD
   m_EditorClassIdentifier: 
   prefab: {fileID: 1756150475951982615, guid: f7cb791274ace314b97441caf5fdaa5c, type: 3}
-  cost: 100
+  cost: 280

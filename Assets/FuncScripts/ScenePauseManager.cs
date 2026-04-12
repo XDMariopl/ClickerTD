@@ -52,6 +52,22 @@ public class ScenePauseManager : MonoBehaviour
         Debug.Log("Resume Soft Pause");
     }
 
+    public void EnterSoftPauseExternal()
+    {
+        if (IsHardPaused || IsSoftPaused)
+            return;
+
+        EnterSoftPause();
+    }
+
+    public void ExitSoftPauseExternal()
+    {
+        if (IsHardPaused || !IsSoftPaused)
+            return;
+
+        ResumeSoftPause();
+    }
+
     // ---------- HARD PAUSE ----------
     public void EnterHardPause()
     {

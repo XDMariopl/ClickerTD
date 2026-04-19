@@ -1,0 +1,35 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor Player
+
+rectangle "ClickerTD" {
+  usecase "Start Level" as UC_Start
+  usecase "Place Tower" as UC_Place
+  usecase "Click Enemy" as UC_Click
+  usecase "Upgrade Tower" as UC_Upgrade
+  usecase "Pause/Resume" as UC_Pause
+  usecase "Win Level" as UC_Win
+  usecase "Lose Level" as UC_Lose
+  usecase "View Win Panel" as UC_WinPanel
+  usecase "View Lose Panel" as UC_LosePanel
+  usecase "Retry Level" as UC_Retry
+  usecase "Load Next Level" as UC_Next
+  usecase "Return to Main Menu" as UC_Menu
+}
+
+Player --> UC_Start
+Player --> UC_Place
+Player --> UC_Click
+Player --> UC_Upgrade
+Player --> UC_Pause
+Player --> UC_Retry
+Player --> UC_Next
+Player --> UC_Menu
+
+UC_Win ..> UC_WinPanel : <<include>>
+UC_Lose ..> UC_LosePanel : <<include>>
+
+@enduml

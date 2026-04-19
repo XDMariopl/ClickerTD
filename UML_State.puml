@@ -1,0 +1,27 @@
+@startuml
+skinparam shadowing false
+skinparam state {
+  BackgroundColor #F5F5F5
+  BorderColor #333333
+}
+
+[*] --> Playing
+
+state Playing {
+  [*] --> Active
+  Active --> SoftPaused : Escape / Open Win/Lose
+  SoftPaused --> Active : Resume
+}
+
+Playing --> Won : All rounds completed
+Playing --> Lost : Player HP = 0
+
+Won : Show win panel
+Lost : Show lose panel
+
+Won --> SoftPaused
+Lost --> SoftPaused
+
+SoftPaused --> Playing : Close panel
+
+@enduml

@@ -1,0 +1,92 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+'Unity TD Project - Core Classes'
+
+package "Towers" {
+  class TowerBuff
+  class TowerLevel
+  enum TowerEffectType
+  class TowerData
+  class TowerPlace
+  class TowerSelectable
+  class TowerUpgradeUI
+
+  interface IHitEffect
+  class NthHitDamageEffect
+  class ChainHitDamage
+  class BombHitDamage
+  class SlowHitEffect
+  class MoneyHitEffect
+  class ReverseHitEffect
+}
+
+package "Enemies" {
+  class EnemyHealth
+  class EnemyMover
+  class EnemySpawner
+  class EnemyManager
+  class DmgClick
+}
+
+package "Gameplay" {
+  class PlayerCursor
+  class ClickManager
+  class HitContext
+  class RoundManager
+  class RoundEntry
+  class MoneySystem
+  class PlayerHealth
+  class ScenePauseManager
+  class SceneController
+  class WinLoseUI
+  class GridManager
+  class Path
+  class LevelInitializer
+}
+
+' ---------- Relationships ----------
+TowerBuff o-- TowerLevel : levels
+TowerLevel --> TowerEffectType
+TowerBuff ..> IHitEffect : creates
+
+IHitEffect <|.. NthHitDamageEffect
+IHitEffect <|.. ChainHitDamage
+IHitEffect <|.. BombHitDamage
+IHitEffect <|.. SlowHitEffect
+IHitEffect <|.. MoneyHitEffect
+IHitEffect <|.. ReverseHitEffect
+
+TowerSelectable --> TowerBuff
+TowerSelectable --> TowerUpgradeUI
+TowerUpgradeUI --> TowerBuff : reads/upgrade
+TowerUpgradeUI --> TowerLevel : displays
+
+TowerPlace --> GridManager
+TowerPlace --> TowerData
+TowerPlace --> TowerBuff : preview
+
+PlayerCursor --> IHitEffect : registers
+PlayerCursor --> HitContext
+ClickManager --> PlayerCursor
+ClickManager --> EnemyHealth
+
+HitContext --> EnemyHealth
+EnemyHealth --> MoneySystem
+EnemyHealth --> EnemyManager : add/remove
+EnemyMover --> Path
+EnemySpawner --> EnemyMover : prefab
+EnemySpawner --> Path
+RoundEntry --> EnemySpawner.EnemyEntry
+RoundManager --> EnemySpawner
+RoundManager --> RoundEntry
+RoundManager --> WinLoseUI
+
+PlayerHealth --> WinLoseUI
+WinLoseUI --> ScenePauseManager
+SceneController --> ScenePauseManager
+
+LevelInitializer --> GridManager
+LevelInitializer --> Path
+
+@enduml

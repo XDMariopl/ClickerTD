@@ -7,6 +7,8 @@ public class TowerLevel
 
     [Header("Upgrade")]
     public int upgradeCost;
+    public Sprite towerBaseSprite;
+    public Sprite towerEffectSprite;
 
     [Header("Nth Hit Damage")]
     public int everyN;

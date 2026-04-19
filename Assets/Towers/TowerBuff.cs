@@ -7,6 +7,10 @@ public class TowerBuff : MonoBehaviour
     public float radius = 2.5f;
     public TowerLevel[] levels;
 
+    [Header("Level Visuals")]
+    [SerializeField] private SpriteRenderer towerBaseRenderer;
+    [SerializeField] private SpriteRenderer towerEffectRenderer;
+
     [Header("Visual")]
     public Color radiusColor = new Color(0f, 1f, 0f, 0.6f);
     public float lineWidth = 0.05f;
@@ -24,6 +28,8 @@ public class TowerBuff : MonoBehaviour
     void Start()
     {
         cursor = FindFirstObjectByType<PlayerCursor>();
+        CacheVisuals();
+        ApplyCurrentLevelVisuals();
         CreateRadiusVisual();
         circle.enabled = false;
     }
@@ -100,6 +106,7 @@ public class TowerBuff : MonoBehaviour
             return false;
 
         currentLevel++;
+        ApplyCurrentLevelVisuals();
 
         if (active && cursor != null)
         {
@@ -109,6 +116,28 @@ public class TowerBuff : MonoBehaviour
         }
 
         return true;
+    }
+
+    void CacheVisuals()
+    {
+        if (towerBaseRenderer == null)
+            towerBaseRenderer = GetComponentInChildren<SpriteRenderer>();
+    }
+
+    void ApplyCurrentLevelVisuals()
+    {
+        if (levels == null || levels.Length == 0)
+            return;
+
+        CacheVisuals();
+
+        TowerLevel lvl = levels[Mathf.Clamp(currentLevel, 0, levels.Length - 1)];
+
+        if (towerBaseRenderer != null && lvl.towerBaseSprite != null)
+            towerBaseRenderer.sprite = lvl.towerBaseSprite;
+
+        if (towerEffectRenderer != null && lvl.towerEffectSprite != null)
+            towerEffectRenderer.sprite = lvl.towerEffectSprite;
     }
 
 

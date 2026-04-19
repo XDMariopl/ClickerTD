@@ -1,0 +1,31 @@
+@startuml
+skinparam activity {
+  BackgroundColor #F5F5F5
+  BorderColor #333333
+}
+
+start
+:Load Level Scene;
+:Initialize Grid & Path;
+:Start Round Loop;
+repeat
+  :Spawn Enemies;
+  repeat
+    :Player Clicks Enemy;
+    :Apply Hit Effects;
+    :Deal Damage;
+  repeat while (Enemies alive?) is (yes)
+  :Wait Between Rounds;
+repeat while (More rounds?) is (yes)
+
+if (Player HP <= 0?) then (yes)
+  :Show Lose Panel;
+  :Soft Pause;
+  stop
+else (no)
+  :Show Win Panel;
+  :Soft Pause;
+  stop
+endif
+
+@enduml

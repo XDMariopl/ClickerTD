@@ -25,6 +25,8 @@ public class TowerLevelDrawer : PropertyDrawer
 
         DrawField(ref rect, property, "effectType");
         DrawField(ref rect, property, "upgradeCost");
+        DrawField(ref rect, property, "towerBaseSprite");
+        DrawField(ref rect, property, "towerEffectSprite");
 
         TowerEffectType effect = (TowerEffectType)property.FindPropertyRelative("effectType").enumValueIndex;
 
@@ -81,6 +83,8 @@ public class TowerLevelDrawer : PropertyDrawer
 
         height += GetFieldHeight(property, "effectType") + pad;
         height += GetFieldHeight(property, "upgradeCost") + pad;
+        height += GetFieldHeight(property, "towerBaseSprite") + pad;
+        height += GetFieldHeight(property, "towerEffectSprite") + pad;
 
         TowerEffectType effect = (TowerEffectType)property.FindPropertyRelative("effectType").enumValueIndex;
 

@@ -1,0 +1,55 @@
+@startuml
+skinparam componentStyle rectangle
+
+package "UI" {
+  [TowerUpgradeUI]
+  [WinLoseUI]
+  [MoneySystem UI]
+  [PlayerHealth UI]
+}
+
+package "Towers" {
+  [TowerPlace]
+  [TowerBuff]
+  [TowerSelectable]
+  [Hit Effects]
+}
+
+package "Enemies" {
+  [EnemySpawner]
+  [EnemyMover]
+  [EnemyHealth]
+  [EnemyManager]
+}
+
+package "Core Gameplay" {
+  [PlayerCursor]
+  [ClickManager]
+  [RoundManager]
+  [GridManager]
+  [Path]
+  [ScenePauseManager]
+  [SceneController]
+}
+
+[TowerPlace] --> [GridManager]
+[TowerPlace] --> [TowerBuff]
+[TowerSelectable] --> [TowerUpgradeUI]
+[TowerUpgradeUI] --> [TowerBuff]
+
+[ClickManager] --> [PlayerCursor]
+[PlayerCursor] --> [Hit Effects]
+[PlayerCursor] --> [EnemyHealth]
+
+[EnemySpawner] --> [EnemyMover]
+[EnemyMover] --> [Path]
+[EnemyHealth] --> [EnemyManager]
+[EnemyHealth] --> [MoneySystem UI]
+
+[RoundManager] --> [EnemySpawner]
+[RoundManager] --> [WinLoseUI]
+
+[WinLoseUI] --> [ScenePauseManager]
+[SceneController] --> [ScenePauseManager]
+
+@enduml

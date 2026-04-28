@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06fd126437c0c2741b5f1983156175c9, type: 3}
   m_Name: DoubleTD
   m_EditorClassIdentifier: 
+  towerId: 1
   prefab: {fileID: 1161781003537322576, guid: b82ff60159b775342a0d7923e70f1d31, type: 3}
   cost: 100
+  unlockAfterCompletedLevels: 0

@@ -41,6 +41,12 @@ public class TowerPlace : MonoBehaviour
 
     public void StartPlacing(TowerData tower)
     {
+        if (ProgressManager.Instance != null && !ProgressManager.Instance.IsTowerUnlocked(tower))
+        {
+            Debug.Log("Tower is locked!");
+            return;
+        }
+
         if (!MoneySystem.Instance.CanAfford(tower.cost))
         {
             Debug.Log("Not enough money!");

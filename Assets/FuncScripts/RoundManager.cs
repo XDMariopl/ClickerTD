@@ -62,6 +62,8 @@ public class RoundManager : MonoBehaviour
         int collected = MoneySystem.Instance != null ? MoneySystem.Instance.TotalCollected() : 0;
         int lostLives = PlayerHealth.Instance != null ? PlayerHealth.Instance.LostLives() : 0;
 
+        LevelManager.Instance?.CompleteCurrentLevel();
+
         if (WinLoseUI.Instance != null)
             WinLoseUI.Instance.ShowWin(lostLives, spent, collected);
     }

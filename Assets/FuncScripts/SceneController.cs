@@ -45,11 +45,20 @@ public class SceneController : MonoBehaviour
 
     public void LoadFirstLevel()
     {
+        if (LevelManager.Instance != null)
+        {
+            LevelManager.Instance.LoadSelectedLevel();
+            return;
+        }
+
         LoadScene(firstLevelScene);
     }
 
     public void LoadNextScene()
     {
+        if (LevelManager.Instance != null && LevelManager.Instance.TryLoadNextLevelFromCurrentScene())
+            return;
+
         Time.timeScale = 1f;
         int index = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(index + 1);

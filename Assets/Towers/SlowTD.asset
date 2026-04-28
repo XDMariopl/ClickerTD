@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06fd126437c0c2741b5f1983156175c9, type: 3}
   m_Name: SlowTD
   m_EditorClassIdentifier: 
+  towerId: 4
   prefab: {fileID: 1756150475951982615, guid: f7cb791274ace314b97441caf5fdaa5c, type: 3}
   cost: 280
+  unlockAfterCompletedLevels: 0

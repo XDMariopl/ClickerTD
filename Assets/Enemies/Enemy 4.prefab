@@ -127,8 +127,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6da1e9d36a571044884e698a761d5b30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 5
-  damageToPlayer: 10
+  maxHP: 3
+  damageToPlayer: 8
   moneyDrop: 16
 --- !u!114 &679823039450496028
 MonoBehaviour:

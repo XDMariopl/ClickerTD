@@ -122,7 +122,7 @@ MonoBehaviour:
   - effectType: 0
     upgradeCost: 0
     towerBaseSprite: {fileID: 5075230056192899191, guid: 252ee18860cf03847a94bd510eb6b57d, type: 3}
-    towerEffectSprite: {fileID: 0}
+    towerEffectSprite: {fileID: 1923326690927268781, guid: 9a1fed7d6be2f3c48b1309e93a2f1b0a, type: 3}
     everyN: 4
     multiplier: 2
     chainNth: 0
@@ -145,7 +145,7 @@ MonoBehaviour:
   - effectType: 0
     upgradeCost: 300
     towerBaseSprite: {fileID: 7921731053811611534, guid: 252ee18860cf03847a94bd510eb6b57d, type: 3}
-    towerEffectSprite: {fileID: 0}
+    towerEffectSprite: {fileID: -6359685143020311, guid: 9a1fed7d6be2f3c48b1309e93a2f1b0a, type: 3}
     everyN: 3
     multiplier: 3
     chainNth: 0
@@ -168,7 +168,7 @@ MonoBehaviour:
   - effectType: 0
     upgradeCost: 650
     towerBaseSprite: {fileID: -2105860346893036930, guid: 252ee18860cf03847a94bd510eb6b57d, type: 3}
-    towerEffectSprite: {fileID: 0}
+    towerEffectSprite: {fileID: 5503036172781537868, guid: 9a1fed7d6be2f3c48b1309e93a2f1b0a, type: 3}
     everyN: 2
     multiplier: 4
     chainNth: 0
@@ -191,7 +191,7 @@ MonoBehaviour:
   - effectType: 0
     upgradeCost: 980
     towerBaseSprite: {fileID: -4162489267526915418, guid: 252ee18860cf03847a94bd510eb6b57d, type: 3}
-    towerEffectSprite: {fileID: 0}
+    towerEffectSprite: {fileID: -5972259700151986011, guid: 9a1fed7d6be2f3c48b1309e93a2f1b0a, type: 3}
     everyN: 2
     multiplier: 6
     chainNth: 0

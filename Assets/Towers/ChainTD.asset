@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06fd126437c0c2741b5f1983156175c9, type: 3}
   m_Name: ChainTD
   m_EditorClassIdentifier: 
+  towerId: 2
   prefab: {fileID: 4996267989437817386, guid: 1df995ef1ce7c92498e81410bcdd8d23, type: 3}
   cost: 150
+  unlockAfterCompletedLevels: 0

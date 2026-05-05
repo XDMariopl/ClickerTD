@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseDamage: 1
+  effectParticlePrefab: {fileID: 4518730099873095504, guid: f725b5055bb379e44a9abd8d6f9287ff, type: 3}

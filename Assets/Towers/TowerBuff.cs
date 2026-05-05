@@ -140,15 +140,24 @@ public class TowerBuff : MonoBehaviour
             towerEffectRenderer.sprite = lvl.towerEffectSprite;
     }
 
+    Sprite GetCurrentEffectSprite()
+    {
+        if (towerEffectRenderer == null)
+            return null;
+
+        return towerEffectRenderer.sprite;
+    }
+
 
     IHitEffect CreateEffect(TowerLevel lvl)
     {
         TowerSFX sfx = GetComponent<TowerSFX>(); // optional
+        Sprite effectSprite = GetCurrentEffectSprite();
 
         switch (lvl.effectType)
         {
             case TowerEffectType.NthHitDamage:
-                return new NthHitDamageEffect(lvl.everyN, lvl.multiplier, sfx);
+                return new NthHitDamageEffect(lvl.everyN, lvl.multiplier, sfx, cursor, effectSprite);
 
             case TowerEffectType.ChainDamage:
                 return new ChainHitDamage(
@@ -156,19 +165,21 @@ public class TowerBuff : MonoBehaviour
                     lvl.chainHits,
                     lvl.chainDamage,
                     lvl.chainRadius,
-                    sfx
+                    sfx,
+                    cursor,
+                    effectSprite
                 );
             case TowerEffectType.BombDamage:
-                return new BombHitDamage(lvl.bombNth, lvl.bombDamage, lvl.bombRadius, sfx);
+                return new BombHitDamage(lvl.bombNth, lvl.bombDamage, lvl.bombRadius, sfx, cursor, effectSprite);
 
             case TowerEffectType.SlowEffect:
-                return new SlowHitEffect(lvl.slowPower, lvl.slowRadius, lvl.slowNth, sfx);
+                return new SlowHitEffect(lvl.slowPower, lvl.slowRadius, lvl.slowNth, sfx, cursor, effectSprite);
 
             case TowerEffectType.MoneyEffect:
-                return new MoneyHitEffect(lvl.moneyMultiply, lvl.moneyNth, sfx);
+                return new MoneyHitEffect(lvl.moneyMultiply, lvl.moneyNth, sfx, cursor, effectSprite);
 
             case TowerEffectType.ReverseEffect:
-                return new ReverseHitEffect(lvl.reverseDuration, lvl.reverseNth, sfx);
+                return new ReverseHitEffect(lvl.reverseDuration, lvl.reverseNth, sfx, cursor, effectSprite);
 
 
         }

@@ -1,4 +1,5 @@
 using Effects;
+using UnityEngine;
 
 public class MoneyHitEffect : IHitEffect
 {
@@ -7,12 +8,16 @@ public class MoneyHitEffect : IHitEffect
 
     private int localHitCounter = 0;
     private TowerSFX towerSFX;
+    private PlayerCursor cursor;
+    private Sprite effectSprite;
 
-    public MoneyHitEffect(int moneyMultiplier, int moneyNth, TowerSFX sfx = null)
+    public MoneyHitEffect(int moneyMultiplier, int moneyNth, TowerSFX sfx = null, PlayerCursor cursor = null, Sprite effectSprite = null)
     {
         this.moneyMultiplier = moneyMultiplier;
         this.moneyNth = moneyNth;
         this.towerSFX = sfx;
+        this.cursor = cursor;
+        this.effectSprite = effectSprite;
     }
 
     public void OnHit(HitContext context)
@@ -26,6 +31,7 @@ public class MoneyHitEffect : IHitEffect
             return;
 
         towerSFX?.PlayAbilitySFX();
+        cursor?.TriggerEffectParticles(effectSprite, context.target.transform.position);
 
         context.target.ApplyMoneyMultiplier(moneyMultiplier);
     }

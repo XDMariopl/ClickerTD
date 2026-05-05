@@ -12,6 +12,12 @@ public class LevelEntry
     public string sceneName;
 }
 
+public enum LevelPlayMode
+{
+    Campaign,
+    Endless
+}
+
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance;
@@ -26,7 +32,12 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Button nextButton;
     [SerializeField] private Button loadButton;
 
+    [Header("Endless Mode")]
+    [SerializeField] private Button endlessButton;
+    [SerializeField] private TMP_Text endlessStatusText;
+
     private int selectedLevelIndex;
+    public LevelPlayMode CurrentMode { get; private set; } = LevelPlayMode.Campaign;
 
     void Awake()
     {
@@ -80,6 +91,7 @@ public class LevelManager : MonoBehaviour
         if (ProgressManager.Instance != null && !ProgressManager.Instance.IsLevelUnlocked(levelId))
             return;
 
+        CurrentMode = LevelPlayMode.Campaign;
         Time.timeScale = 1f;
         SceneManager.LoadScene(level.sceneName);
     }
@@ -105,8 +117,20 @@ public class LevelManager : MonoBehaviour
         RefreshUI();
     }
 
+    public string GetCurrentSceneLevelId()
+    {
+        int levelIndex = FindLevelIndexByScene(SceneManager.GetActiveScene().name);
+        if (levelIndex < 0)
+            return string.Empty;
+
+        return GetLevelId(levels[levelIndex]);
+    }
+
     public bool TryLoadNextLevelFromCurrentScene()
     {
+        if (CurrentMode == LevelPlayMode.Endless)
+            return false;
+
         int currentLevelIndex = FindLevelIndexByScene(SceneManager.GetActiveScene().name);
         int nextLevelIndex = currentLevelIndex + 1;
 
@@ -155,6 +179,45 @@ public class LevelManager : MonoBehaviour
 
         if (loadButton != null)
             loadButton.interactable = unlocked;
+
+        bool endlessUnlocked = IsSelectedLevelEndlessUnlocked();
+
+        if (endlessButton != null)
+            endlessButton.interactable = endlessUnlocked && levels != null && levels.Length > 0;
+
+        if (endlessStatusText != null)
+            endlessStatusText.text = endlessUnlocked ? "Unlocked" : "Complete this map to unlock";
+    }
+
+    public void LoadEndlessMode()
+    {
+        if (!IsSelectedLevelEndlessUnlocked())
+            return;
+
+        if (levels == null || levels.Length == 0)
+            return;
+
+        LevelEntry level = levels[selectedLevelIndex];
+        if (level == null || string.IsNullOrWhiteSpace(level.sceneName))
+            return;
+
+        string levelId = GetLevelId(level);
+        if (ProgressManager.Instance != null && !ProgressManager.Instance.IsLevelUnlocked(levelId))
+            return;
+
+        CurrentMode = LevelPlayMode.Endless;
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(level.sceneName);
+    }
+
+    public bool IsSelectedLevelEndlessUnlocked()
+    {
+        if (levels == null || levels.Length == 0 || ProgressManager.Instance == null)
+            return false;
+
+        ClampSelectedIndex();
+        string levelId = GetLevelId(levels[selectedLevelIndex]);
+        return ProgressManager.Instance.IsLevelCompleted(levelId);
     }
 
     private void EnsureInitialLevelUnlock()
@@ -181,6 +244,8 @@ public class LevelManager : MonoBehaviour
         previousButton = other.previousButton;
         nextButton = other.nextButton;
         loadButton = other.loadButton;
+        endlessButton = other.endlessButton;
+        endlessStatusText = other.endlessStatusText;
     }
 
     private int FindLevelIndexByScene(string sceneName)

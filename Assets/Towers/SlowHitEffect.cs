@@ -9,13 +9,17 @@ public class SlowHitEffect : IHitEffect
 
     private int localHitCounter = 0;
     private TowerSFX towerSFX;
+    private PlayerCursor cursor;
+    private Sprite effectSprite;
 
-    public SlowHitEffect(float slowPercent, float slowRadius, int slowNth, TowerSFX sfx = null)
+    public SlowHitEffect(float slowPercent, float slowRadius, int slowNth, TowerSFX sfx = null, PlayerCursor cursor = null, Sprite effectSprite = null)
     {
         this.slowPercent = slowPercent;
         this.slowRadius = slowRadius;
         this.slowNth = slowNth;
         this.towerSFX = sfx;
+        this.cursor = cursor;
+        this.effectSprite = effectSprite;
     }
 
     public void OnHit(HitContext context)
@@ -31,6 +35,7 @@ public class SlowHitEffect : IHitEffect
         towerSFX?.PlayAbilitySFX();
 
         Vector3 center = context.target.transform.position;
+        cursor?.TriggerEffectParticles(effectSprite, center);
 
         foreach (var enemy in EnemyManager.ActiveEnemies)
         {

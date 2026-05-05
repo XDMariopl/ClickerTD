@@ -9,13 +9,17 @@ public class BombHitDamage : IHitEffect
 
     private int localHitCounter = 0;
     private TowerSFX towerSFX;
+    private PlayerCursor cursor;
+    private Sprite effectSprite;
 
-    public BombHitDamage(int bombNth, int bombDamage, float bombRadius, TowerSFX sfx = null)
+    public BombHitDamage(int bombNth, int bombDamage, float bombRadius, TowerSFX sfx = null, PlayerCursor cursor = null, Sprite effectSprite = null)
     {
         this.bombNth = bombNth;
         this.bombDamage = bombDamage;
         this.bombRadius = bombRadius;
         this.towerSFX = sfx;
+        this.cursor = cursor;
+        this.effectSprite = effectSprite;
     }
 
     public void OnHit(HitContext context)
@@ -31,6 +35,7 @@ public class BombHitDamage : IHitEffect
         towerSFX?.PlayAbilitySFX();
 
         Vector3 explosionCenter = context.target.transform.position;
+        cursor?.TriggerEffectParticles(effectSprite, explosionCenter);
 
         DrawExplosionCircle(explosionCenter);
 
@@ -42,7 +47,7 @@ public class BombHitDamage : IHitEffect
             );
 
             if (dist <= bombRadius)
-                enemy.TakeDamage(bombDamage);
+                enemy.TakeDamage(bombDamage, EnemyDamageSource.TowerEffect);
         }
     }
 

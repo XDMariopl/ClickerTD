@@ -11,14 +11,18 @@ public class ChainHitDamage : IHitEffect
 
     private int localHitCounter = 0;
     private TowerSFX towerSFX;
+    private PlayerCursor cursor;
+    private Sprite effectSprite;
 
-    public ChainHitDamage(int chainNth, int chainHits, int chainDamage, float chainRadius, TowerSFX sfx = null)
+    public ChainHitDamage(int chainNth, int chainHits, int chainDamage, float chainRadius, TowerSFX sfx = null, PlayerCursor cursor = null, Sprite effectSprite = null)
     {
         this.chainNth = chainNth;
         this.chainHits = chainHits;
         this.chainDamage = chainDamage;
         this.chainRadius = chainRadius;
         this.towerSFX = sfx;
+        this.cursor = cursor;
+        this.effectSprite = effectSprite;
     }
 
     public void OnHit(HitContext context)
@@ -32,6 +36,7 @@ public class ChainHitDamage : IHitEffect
             return;
 
         towerSFX?.PlayAbilitySFX();
+        cursor?.TriggerEffectParticles(effectSprite, context.target.transform.position);
 
         Chain(context.target);
     }
@@ -58,7 +63,7 @@ public class ChainHitDamage : IHitEffect
             if (next == null)
                 break;
 
-            next.TakeDamage(chainDamage);
+            next.TakeDamage(chainDamage, EnemyDamageSource.TowerEffect);
 
             DrawChainLine(current.transform.position, next.transform.position);
 

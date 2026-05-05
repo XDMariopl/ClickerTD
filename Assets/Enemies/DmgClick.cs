@@ -11,6 +11,6 @@ public class DmgClick : MonoBehaviour
 
     public void ApplyDamage(int dmg)
     {
-        enemyHealth.TakeDamage(dmg);
+        enemyHealth.TakeDamage(dmg, EnemyDamageSource.DirectHit);
     }
 }

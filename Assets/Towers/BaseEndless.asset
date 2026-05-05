@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f03e279e51fdd41459000fdf8bef52b6, type: 3}
+  m_Name: BaseEndless
+  m_EditorClassIdentifier: 
+  startingBudget: 15
+  budgetIncreasePerRound: 5
+  budgetRampEvery: 5
+  extraRampAmount: 10
+  delayBetweenRounds: 4
+  enemyOptions:
+  - prefab: {fileID: 5696867637349669123, guid: f9576a725ef38da46a137a68b53c0842, type: 3}
+    enemyCost: 1
+    unlockRound: 0
+    lastRound: 10
+    weight: 5
+  - prefab: {fileID: 5728208583360428049, guid: 64e683d1c64e54546b9a30292487818b, type: 3}
+    enemyCost: 3
+    unlockRound: 0
+    lastRound: 0
+    weight: 3
+  - prefab: {fileID: 6533424651477324709, guid: 826bbd0be5869aa4eb14f9fcf59227c9, type: 3}
+    enemyCost: 4
+    unlockRound: 5
+    lastRound: 0
+    weight: 3
+  - prefab: {fileID: 6533424651477324709, guid: d0b892912a15ea74e849acafe8e9951c, type: 3}
+    enemyCost: 3
+    unlockRound: 0
+    lastRound: 0
+    weight: 3

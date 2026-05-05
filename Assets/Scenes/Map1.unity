@@ -495,7 +495,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4352d136f6a310146ba2848a8c9bc8da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startMoney: 250
+  startMoney: 10000
   moneyText: {fileID: 553436753}
 --- !u!114 &44334870
 MonoBehaviour:
@@ -514,35 +514,49 @@ MonoBehaviour:
   - enemies:
     - prefab: {fileID: 5696867637349669123, guid: f9576a725ef38da46a137a68b53c0842, type: 3}
       count: 10
+      modifiers: 0
   - enemies:
     - prefab: {fileID: 5696867637349669123, guid: f9576a725ef38da46a137a68b53c0842, type: 3}
       count: 20
+      modifiers: 0
     - prefab: {fileID: 5728208583360428049, guid: 64e683d1c64e54546b9a30292487818b, type: 3}
       count: 5
+      modifiers: 0
   - enemies:
     - prefab: {fileID: 5696867637349669123, guid: f9576a725ef38da46a137a68b53c0842, type: 3}
       count: 5
+      modifiers: 0
     - prefab: {fileID: 5728208583360428049, guid: 64e683d1c64e54546b9a30292487818b, type: 3}
       count: 5
+      modifiers: 0
     - prefab: {fileID: 5696867637349669123, guid: f9576a725ef38da46a137a68b53c0842, type: 3}
       count: 5
+      modifiers: 0
     - prefab: {fileID: 5728208583360428049, guid: 64e683d1c64e54546b9a30292487818b, type: 3}
       count: 5
+      modifiers: 0
   - enemies:
     - prefab: {fileID: 5728208583360428049, guid: 64e683d1c64e54546b9a30292487818b, type: 3}
       count: 20
+      modifiers: 0
     - prefab: {fileID: 5696867637349669123, guid: f9576a725ef38da46a137a68b53c0842, type: 3}
       count: 10
+      modifiers: 0
   - enemies:
     - prefab: {fileID: 5728208583360428049, guid: 64e683d1c64e54546b9a30292487818b, type: 3}
       count: 10
+      modifiers: 0
     - prefab: {fileID: 6533424651477324709, guid: 826bbd0be5869aa4eb14f9fcf59227c9, type: 3}
       count: 10
+      modifiers: 0
     - prefab: {fileID: 6533424651477324709, guid: d0b892912a15ea74e849acafe8e9951c, type: 3}
       count: 5
+      modifiers: 0
     - prefab: {fileID: 5728208583360428049, guid: 64e683d1c64e54546b9a30292487818b, type: 3}
       count: 10
+      modifiers: 0
   delayBetweenRounds: 4
+  endlessConfig: {fileID: 11400000, guid: b696cd4ca6e412c4eb9b53ff22fad4ca, type: 2}
   roundText: {fileID: 519551632}
 --- !u!114 &44334871
 MonoBehaviour:

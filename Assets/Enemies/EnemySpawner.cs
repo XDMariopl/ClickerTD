@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class EnemySpawner : MonoBehaviour
     {
         public EnemyMover prefab;
         public int count;
+        public EnemyModifierType modifiers;
     }
 
     public bool IsSpawning { get; private set; }
@@ -22,18 +24,39 @@ public class EnemySpawner : MonoBehaviour
     {
         foreach (var entry in round.enemies)
         {
-            for (int i = 0; i < entry.count; i++)
-            {
-                EnemyMover enemy = Instantiate(
-                    entry.prefab,
-                    enemyParent,
-                    false
-                );
+            yield return SpawnEnemyEntry(entry);
+        }
+    }
 
-                enemy.Init(path);
+    public IEnumerator SpawnWave(IEnumerable<EnemyEntry> entries)
+    {
+        if (entries == null)
+            yield break;
 
-                yield return new WaitForSeconds(spawnDelay);
-            }
+        foreach (var entry in entries)
+            yield return SpawnEnemyEntry(entry);
+    }
+
+    IEnumerator SpawnEnemyEntry(EnemyEntry entry)
+    {
+        if (entry == null || entry.prefab == null || entry.count <= 0)
+            yield break;
+
+        for (int i = 0; i < entry.count; i++)
+        {
+            EnemyMover enemy = Instantiate(
+                entry.prefab,
+                enemyParent,
+                false
+            );
+
+            EnemyHealth health = enemy.GetComponent<EnemyHealth>();
+            if (health != null)
+                health.ApplyModifiers(entry.modifiers);
+
+            enemy.Init(path);
+
+            yield return new WaitForSeconds(spawnDelay);
         }
     }
 }

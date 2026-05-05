@@ -5,5 +5,6 @@ namespace Effects
         public int hitCount;
         public int damage;
         public EnemyHealth target;
+        public EnemyDamageSource damageSource;
     }
 }

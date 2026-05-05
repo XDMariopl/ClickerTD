@@ -8,6 +8,15 @@ public class PlayerProgressData
     public List<string> completedLevelIds = new List<string>();
     public List<string> unlockedLevelIds = new List<string>();
     public List<string> unlockedTowerIds = new List<string>();
+    public List<LevelMedalProgress> levelMedals = new List<LevelMedalProgress>();
+}
+
+[Serializable]
+public class LevelMedalProgress
+{
+    public string levelId;
+    public int medalTier;
+    public int bestEndlessRound;
 }
 
 public class ProgressManager : MonoBehaviour
@@ -113,7 +122,64 @@ public class ProgressManager : MonoBehaviour
             progress.completedLevelIds.Add(levelId);
 
         UnlockLevel(levelId);
+        AwardMedal(levelId, 1);
         RefreshTowerUnlocks();
+        SaveProgress();
+    }
+
+    public int GetMedalTier(string levelId)
+    {
+        if (string.IsNullOrEmpty(levelId))
+            return 0;
+
+        LevelMedalProgress medalProgress = GetOrCreateLevelMedalProgress(levelId);
+        return medalProgress.medalTier;
+    }
+
+    public int GetBestEndlessRound(string levelId)
+    {
+        if (string.IsNullOrEmpty(levelId))
+            return 0;
+
+        LevelMedalProgress medalProgress = GetOrCreateLevelMedalProgress(levelId);
+        return medalProgress.bestEndlessRound;
+    }
+
+    public void RegisterEndlessRoundReached(string levelId, int round)
+    {
+        if (string.IsNullOrEmpty(levelId) || round <= 0)
+            return;
+
+        LevelMedalProgress medalProgress = GetOrCreateLevelMedalProgress(levelId);
+        bool changed = false;
+
+        if (round > medalProgress.bestEndlessRound)
+        {
+            medalProgress.bestEndlessRound = round;
+            changed = true;
+        }
+
+        int medalTier = GetEndlessMedalTier(round);
+        if (medalTier > medalProgress.medalTier)
+        {
+            medalProgress.medalTier = medalTier;
+            changed = true;
+        }
+
+        if (changed)
+            SaveProgress();
+    }
+
+    public void AwardMedal(string levelId, int medalTier)
+    {
+        if (string.IsNullOrEmpty(levelId) || medalTier <= 0)
+            return;
+
+        LevelMedalProgress medalProgress = GetOrCreateLevelMedalProgress(levelId);
+        if (medalTier <= medalProgress.medalTier)
+            return;
+
+        medalProgress.medalTier = medalTier;
         SaveProgress();
     }
 
@@ -198,5 +264,43 @@ public class ProgressManager : MonoBehaviour
 
         if (progress.unlockedTowerIds == null)
             progress.unlockedTowerIds = new List<string>();
+
+        if (progress.levelMedals == null)
+            progress.levelMedals = new List<LevelMedalProgress>();
+    }
+
+    private LevelMedalProgress GetOrCreateLevelMedalProgress(string levelId)
+    {
+        EnsureLists();
+
+        for (int i = 0; i < progress.levelMedals.Count; i++)
+        {
+            if (progress.levelMedals[i] != null && progress.levelMedals[i].levelId == levelId)
+                return progress.levelMedals[i];
+        }
+
+        LevelMedalProgress medalProgress = new LevelMedalProgress
+        {
+            levelId = levelId,
+            medalTier = 0,
+            bestEndlessRound = 0
+        };
+
+        progress.levelMedals.Add(medalProgress);
+        return medalProgress;
+    }
+
+    private int GetEndlessMedalTier(int round)
+    {
+        if (round >= 80)
+            return 4;
+
+        if (round >= 45)
+            return 3;
+
+        if (round >= 25)
+            return 2;
+
+        return 0;
     }
 }

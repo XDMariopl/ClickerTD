@@ -31,6 +31,11 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Button previousButton;
     [SerializeField] private Button nextButton;
     [SerializeField] private Button loadButton;
+    [SerializeField] private Image[] medalImages;
+
+    [Header("Medal Colors")]
+    [SerializeField] private Color activeMedalColor = new Color32(255, 255, 255, 255);
+    [SerializeField] private Color inactiveMedalColor = new Color32(58, 58, 58, 120);
 
     [Header("Endless Mode")]
     [SerializeField] private Button endlessButton;
@@ -187,6 +192,8 @@ public class LevelManager : MonoBehaviour
 
         if (endlessStatusText != null)
             endlessStatusText.text = endlessUnlocked ? "Unlocked" : "Complete this map to unlock";
+
+        RefreshMedalVisuals(levelId);
     }
 
     public void LoadEndlessMode()
@@ -246,6 +253,25 @@ public class LevelManager : MonoBehaviour
         loadButton = other.loadButton;
         endlessButton = other.endlessButton;
         endlessStatusText = other.endlessStatusText;
+        medalImages = other.medalImages;
+        activeMedalColor = other.activeMedalColor;
+        inactiveMedalColor = other.inactiveMedalColor;
+    }
+
+    private void RefreshMedalVisuals(string levelId)
+    {
+        if (medalImages == null || medalImages.Length == 0)
+            return;
+
+        int medalTier = ProgressManager.Instance != null ? ProgressManager.Instance.GetMedalTier(levelId) : 0;
+
+        for (int i = 0; i < medalImages.Length; i++)
+        {
+            if (medalImages[i] == null)
+                continue;
+
+            medalImages[i].color = i < medalTier ? activeMedalColor : inactiveMedalColor;
+        }
     }
 
     private int FindLevelIndexByScene(string sceneName)

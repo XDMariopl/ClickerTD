@@ -1,0 +1,168 @@
+@startuml
+title ClickerTD Klašu Diagramma - Torņi
+
+skinparam linetype ortho
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam ranksep 70
+skinparam nodesep 55
+
+top to bottom direction
+
+class TowerData {
+  +towerId : string
+  +prefab : GameObject
+  +cost : int
+  +unlockAfterCompletedLevels : int
+}
+
+class TowerLevel {
+  +effectType : TowerEffectType
+  +upgradeCost : int
+  +towerBaseSprite : Sprite
+  +towerEffectSprite : Sprite
+  +everyN : int
+  +multiplier : float
+  +chainNth : int
+  +chainHits : int
+  +chainDamage : int
+  +chainRadius : float
+  +bombNth : int
+  +bombDamage : int
+  +bombRadius : float
+  +slowPower : float
+  +slowRadius : float
+  +slowNth : int
+  +moneyMultiply : int
+  +moneyNth : int
+  +reverseDuration : float
+  +reverseNth : int
+}
+
+enum TowerEffectType {
+  NthHitDamage
+  ChainDamage
+  BombDamage
+  SlowEffect
+  MoneyEffect
+  ReverseEffect
+}
+
+class TowerBuff {
+  +radius : float
+  +levels : TowerLevel[]
+  +currentLevel : int
+  +isPreview : bool
+  -towerBaseRenderer : SpriteRenderer
+  -towerEffectRenderer : SpriteRenderer
+  -cursor : PlayerCursor
+  -activeEffect : IHitEffect
+  -active : bool
+  +CanUpgrade() : bool
+  +NextUpgradeCost() : int
+  +TryUpgrade() : bool
+  -CreateEffect(lvl : TowerLevel) : IHitEffect
+}
+
+class TowerPlace {
+  +grid : GridManager
+  +cam : Camera
+  +towerParent : Transform
+  -preview : GameObject
+  -currentGridPos : Vector2Int
+  -currentTower : TowerData
+  -placing : bool
+  +StartPlacing(tower : TowerData) : void
+}
+
+class TowerSelectable {
+  -towerBuff : TowerBuff
+}
+
+class TowerSelectButton {
+  -tower : TowerData
+  -towerPlace : TowerPlace
+  -button : Button
+  -lockedVisual : GameObject
+  -lockedText : TMP_Text
+  +SelectTower() : void
+  +RefreshState() : void
+}
+
+class TowerUpgradeUI {
+  +Instance : TowerUpgradeUI
+  -rootPanel : GameObject
+  -activeTower : TowerBuff
+  +Show(tower : TowerBuff) : void
+  +Hide() : void
+  +Upgrade() : void
+  +Refresh() : void
+}
+
+class NthHitDamageEffect
+class ChainHitDamage
+class BombHitDamage
+class SlowHitEffect
+class MoneyHitEffect
+class ReverseHitEffect
+
+interface IHitEffect {
+  +OnHit(context : HitContext) : void
+}
+
+class PlayerCursor {
+  +baseDamage : int
+  -effects : List<IHitEffect>
+  -effectParticlePrefab : ParticleSystem
+  +RegisterEffect(effect : IHitEffect) : void
+  +UnregisterEffect(effect : IHitEffect) : void
+  +HitEnemy(enemy : EnemyHealth) : void
+  +TriggerEffectParticles(effectSprite : Sprite, worldPosition : Vector3) : void
+}
+
+class HitContext {
+  +hitCount : int
+  +damage : int
+  +target : EnemyHealth
+  +damageSource : EnemyDamageSource
+}
+
+class EnemyHealth
+class GridManager
+
+TowerBuff *-down- TowerLevel
+TowerLevel --> TowerEffectType
+TowerSelectable --> TowerBuff
+TowerSelectButton --> TowerData
+TowerSelectButton --> TowerPlace
+TowerUpgradeUI --> TowerBuff
+TowerUpgradeUI --> TowerLevel
+TowerPlace --> GridManager
+TowerPlace --> TowerData
+
+PlayerCursor -down-> IHitEffect
+PlayerCursor -down-> HitContext
+HitContext -down-> EnemyHealth
+
+IHitEffect <|-down- NthHitDamageEffect
+IHitEffect <|-down- ChainHitDamage
+IHitEffect <|-down- BombHitDamage
+IHitEffect <|-down- SlowHitEffect
+IHitEffect <|-down- MoneyHitEffect
+IHitEffect <|-down- ReverseHitEffect
+
+NthHitDamageEffect -down-> PlayerCursor
+NthHitDamageEffect -down-> HitContext
+ChainHitDamage -down-> PlayerCursor
+ChainHitDamage -down-> EnemyHealth
+BombHitDamage -down-> PlayerCursor
+BombHitDamage -down-> EnemyHealth
+SlowHitEffect -down-> PlayerCursor
+SlowHitEffect -down-> EnemyHealth
+MoneyHitEffect -down-> PlayerCursor
+MoneyHitEffect -down-> EnemyHealth
+ReverseHitEffect -down-> PlayerCursor
+ReverseHitEffect -down-> EnemyHealth
+
+@enduml

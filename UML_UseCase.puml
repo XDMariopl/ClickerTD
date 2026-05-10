@@ -1,35 +1,79 @@
 @startuml
+title ClickerTD Lietojuma Gadījumu Diagramma
+
 left to right direction
+skinparam linetype ortho
 skinparam packageStyle rectangle
 skinparam actorStyle awesome
+skinparam shadowing false
+skinparam ranksep 70
+skinparam nodesep 55
 
-actor Player
+actor Spēlētājs
 
-rectangle "ClickerTD" {
-  usecase "Start Level" as UC_Start
-  usecase "Place Tower" as UC_Place
-  usecase "Click Enemy" as UC_Click
-  usecase "Upgrade Tower" as UC_Upgrade
-  usecase "Pause/Resume" as UC_Pause
-  usecase "Win Level" as UC_Win
-  usecase "Lose Level" as UC_Lose
-  usecase "View Win Panel" as UC_WinPanel
-  usecase "View Lose Panel" as UC_LosePanel
-  usecase "Retry Level" as UC_Retry
-  usecase "Load Next Level" as UC_Next
-  usecase "Return to Main Menu" as UC_Menu
+rectangle "Kampaņa Un Progresija" {
+  usecase "Izvēlēties Karti" as UC_SelectMap
+  usecase "Sākt Kampaņas Līmeni" as UC_StartCampaign
+  usecase "Pabeigt Kampaņas Līmeni" as UC_CompleteCampaign
+  usecase "Atbloķēt Nākamo Līmeni" as UC_UnlockNext
+  usecase "Iegūt 1. Medaļas Pakāpi" as UC_Medal1
 }
 
-Player --> UC_Start
-Player --> UC_Place
-Player --> UC_Click
-Player --> UC_Upgrade
-Player --> UC_Pause
-Player --> UC_Retry
-Player --> UC_Next
-Player --> UC_Menu
+rectangle "Bezgalīgais Režīms" {
+  usecase "Sākt Bezgalīgo Režīmu\nizvēlētajā kartē" as UC_StartEndless
+  usecase "Sasniegt 25. Raundu" as UC_Endless25
+  usecase "Sasniegt 45. Raundu" as UC_Endless45
+  usecase "Sasniegt 80. Raundu" as UC_Endless80
+  usecase "Iegūt 2.-4. Medaļas Pakāpi" as UC_EndlessMedals
+}
 
-UC_Win ..> UC_WinPanel : <<include>>
-UC_Lose ..> UC_LosePanel : <<include>>
+rectangle "Torņu Aizsardzības Spēle" {
+  usecase "Izvēlēties Torni" as UC_SelectTower
+  usecase "Novietot Torni" as UC_PlaceTower
+  usecase "Uzlabot Torni" as UC_UpgradeTower
+  usecase "Klikšķināt Uz Pretinieka" as UC_ClickEnemy
+  usecase "Aktivizēt Torņa Efektu" as UC_TriggerEffect
+  usecase "Uzvarēt Pretinieku" as UC_DefeatEnemy
+}
+
+rectangle "Sistēma Un Saskarne" {
+  usecase "Pauze / Turpināt" as UC_Pause
+  usecase "Skatīt Uzvaras Paneli" as UC_WinPanel
+  usecase "Skatīt Zaudējuma Paneli" as UC_LosePanel
+  usecase "Saglabāt Progresu" as UC_Save
+  usecase "Ielādēt Nākamo Līmeni" as UC_NextLevel
+  usecase "Mēģināt Vēlreiz" as UC_Retry
+  usecase "Atgriezties Galvenajā Izvēlnē" as UC_Menu
+}
+
+Spēlētājs -right-> UC_SelectMap
+Spēlētājs -right-> UC_StartCampaign
+Spēlētājs -right-> UC_StartEndless
+Spēlētājs -right-> UC_SelectTower
+Spēlētājs -right-> UC_PlaceTower
+Spēlētājs -right-> UC_UpgradeTower
+Spēlētājs -right-> UC_ClickEnemy
+Spēlētājs -right-> UC_Pause
+Spēlētājs -right-> UC_NextLevel
+Spēlētājs -right-> UC_Retry
+Spēlētājs -right-> UC_Menu
+
+UC_CompleteCampaign -down-> UC_UnlockNext : <<iekļauj>>
+UC_CompleteCampaign -down-> UC_Medal1 : <<iekļauj>>
+UC_CompleteCampaign -down-> UC_WinPanel : <<iekļauj>>
+UC_CompleteCampaign -down-> UC_Save : <<iekļauj>>
+
+UC_StartEndless -down-> UC_Endless25 : <<paplašina>>
+UC_Endless25 -down-> UC_Endless45 : <<paplašina>>
+UC_Endless45 -down-> UC_Endless80 : <<paplašina>>
+UC_Endless25 -right-> UC_EndlessMedals : <<iekļauj>>
+UC_Endless45 -right-> UC_EndlessMedals : <<iekļauj>>
+UC_Endless80 -right-> UC_EndlessMedals : <<iekļauj>>
+UC_EndlessMedals -down-> UC_Save : <<iekļauj>>
+
+UC_ClickEnemy -down-> UC_TriggerEffect : <<paplašina>>
+UC_ClickEnemy -down-> UC_DefeatEnemy : <<iekļauj>>
+UC_DefeatEnemy -down-> UC_Save : <<paplašina>>
+UC_LosePanel -down-> UC_Save : <<iekļauj>>
 
 @enduml

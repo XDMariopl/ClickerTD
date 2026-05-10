@@ -1,17 +1,53 @@
 @startuml
+title ClickerTD Klašu Diagramma - Pārskats
+
+skinparam linetype ortho
+skinparam packageStyle rectangle
 skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam ranksep 70
+skinparam nodesep 55
+skinparam ArrowThickness 1
+skinparam ArrowColor #444444
 
-'Unity TD Project - Core Classes'
+left to right direction
 
-package "Towers" {
-  class TowerBuff
-  class TowerLevel
-  enum TowerEffectType
+package "Progresija" {
+  class ProgressManager
+  class LevelManager
+  class PlayerProgressData
+  class LevelMedalProgress
+  class LevelEntry
+  enum LevelPlayMode
+}
+
+package "Kauja Un Raundi" {
+  class RoundManager
+  class RoundEntry
+  class EnemySpawner
+  class EndlessModeConfig
+  class EndlessEnemyOption
+  class EndlessEnemyModifierOption
+  class EnemyEntry
+}
+
+package "Pretinieki" {
+  class EnemyHealth
+  class EnemyMover
+  class EnemyManager
+  class DmgClick
+  enum EnemyModifierType
+  enum EnemyDamageSource
+}
+
+package "Torņi" {
   class TowerData
+  class TowerLevel
+  class TowerBuff
   class TowerPlace
   class TowerSelectable
+  class TowerSelectButton
   class TowerUpgradeUI
-
   interface IHitEffect
   class NthHitDamageEffect
   class ChainHitDamage
@@ -19,36 +55,47 @@ package "Towers" {
   class SlowHitEffect
   class MoneyHitEffect
   class ReverseHitEffect
+  enum TowerEffectType
 }
 
-package "Enemies" {
-  class EnemyHealth
-  class EnemyMover
-  class EnemySpawner
-  class EnemyManager
-  class DmgClick
-}
-
-package "Gameplay" {
+package "Ievade Un Saskarne" {
   class PlayerCursor
   class ClickManager
   class HitContext
-  class RoundManager
-  class RoundEntry
   class MoneySystem
   class PlayerHealth
+  class WinLoseUI
   class ScenePauseManager
   class SceneController
-  class WinLoseUI
+}
+
+package "Karte Un Režģis" {
   class GridManager
   class Path
+  class ObstaclePath
   class LevelInitializer
 }
 
-' ---------- Relationships ----------
-TowerBuff o-- TowerLevel : levels
+ProgressManager *-down- PlayerProgressData
+PlayerProgressData *-down- LevelMedalProgress
+LevelManager *-down- LevelEntry
+LevelManager --> LevelPlayMode
+
+RoundManager *-down- RoundEntry
+RoundManager --> EnemySpawner
+RoundManager --> EndlessModeConfig
+EndlessModeConfig *-down- EndlessEnemyOption
+EndlessModeConfig *-down- EndlessEnemyModifierOption
+EnemySpawner *-down- EnemyEntry
+
+TowerBuff *-down- TowerLevel
 TowerLevel --> TowerEffectType
-TowerBuff ..> IHitEffect : creates
+TowerPlace --> TowerData
+TowerPlace --> GridManager
+TowerSelectable --> TowerBuff
+TowerSelectButton --> TowerData
+TowerSelectButton --> TowerPlace
+TowerUpgradeUI --> TowerBuff
 
 IHitEffect <|.. NthHitDamageEffect
 IHitEffect <|.. ChainHitDamage
@@ -57,36 +104,41 @@ IHitEffect <|.. SlowHitEffect
 IHitEffect <|.. MoneyHitEffect
 IHitEffect <|.. ReverseHitEffect
 
-TowerSelectable --> TowerBuff
-TowerSelectable --> TowerUpgradeUI
-TowerUpgradeUI --> TowerBuff : reads/upgrade
-TowerUpgradeUI --> TowerLevel : displays
-
-TowerPlace --> GridManager
-TowerPlace --> TowerData
-TowerPlace --> TowerBuff : preview
-
-PlayerCursor --> IHitEffect : registers
+PlayerCursor --> IHitEffect
 PlayerCursor --> HitContext
-ClickManager --> PlayerCursor
-ClickManager --> EnemyHealth
-
 HitContext --> EnemyHealth
-EnemyHealth --> MoneySystem
-EnemyHealth --> EnemyManager : add/remove
-EnemyMover --> Path
-EnemySpawner --> EnemyMover : prefab
-EnemySpawner --> Path
-RoundEntry --> EnemySpawner.EnemyEntry
-RoundManager --> EnemySpawner
-RoundManager --> RoundEntry
-RoundManager --> WinLoseUI
+HitContext --> EnemyDamageSource
 
+EnemySpawner --> EnemyMover
+EnemySpawner --> EnemyHealth
+EnemySpawner --> Path
+EnemyHealth --> EnemyModifierType
+EnemyHealth --> EnemyDamageSource
+EnemyHealth --> MoneySystem
+EnemyHealth --> EnemyManager
+EnemyMover --> Path
+
+LevelManager --> ProgressManager
+LevelManager --> SceneController
+ProgressManager --> TowerData
+RoundManager --> ProgressManager
+RoundManager --> LevelManager
+RoundManager --> WinLoseUI
+PlayerHealth --> RoundManager
 PlayerHealth --> WinLoseUI
 WinLoseUI --> ScenePauseManager
 SceneController --> ScenePauseManager
 
 LevelInitializer --> GridManager
 LevelInitializer --> Path
+LevelInitializer --> ObstaclePath
+
+note bottom of ProgressManager
+Skaties detalizētās diagrammas:
+- UML_Project_Progression.puml
+- UML_Project_Combat.puml
+- UML_Project_Towers.puml
+- UML_Project_MapUI.puml
+end note
 
 @enduml

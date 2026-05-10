@@ -1,0 +1,114 @@
+@startuml
+title ClickerTD Klašu Diagramma - Progresija
+
+skinparam linetype ortho
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam ranksep 70
+skinparam nodesep 55
+
+top to bottom direction
+
+class ProgressManager {
+  +Instance : ProgressManager
+  -saveFileName : string
+  -allTowers : TowerData[]
+  -progress : PlayerProgressData
+  +SaveFilePath : string
+  +HasSaveFile() : bool
+  +CreateNewSave() : void
+  +LoadProgress() : void
+  +SaveProgress() : void
+  +CompletedLevelCount() : int
+  +IsLevelCompleted(levelId : string) : bool
+  +IsLevelUnlocked(levelId : string) : bool
+  +UnlockLevel(levelId : string) : void
+  +CompleteLevel(levelId : string) : void
+  +GetMedalTier(levelId : string) : int
+  +GetBestEndlessRound(levelId : string) : int
+  +RegisterEndlessRoundReached(levelId : string, round : int) : void
+  +AwardMedal(levelId : string, medalTier : int) : void
+  +IsTowerUnlocked(tower : TowerData) : bool
+  +UnlockTower(tower : TowerData) : void
+  +RefreshTowerUnlocks() : void
+}
+
+class PlayerProgressData {
+  +completedLevelIds : List<string>
+  +unlockedLevelIds : List<string>
+  +unlockedTowerIds : List<string>
+  +levelMedals : List<LevelMedalProgress>
+}
+
+class LevelMedalProgress {
+  +levelId : string
+  +medalTier : int
+  +bestEndlessRound : int
+}
+
+class LevelManager {
+  +Instance : LevelManager
+  +levels : LevelEntry[]
+  -levelNameText : TMP_Text
+  -levelStatusText : TMP_Text
+  -previousButton : Button
+  -nextButton : Button
+  -loadButton : Button
+  -medalImages : Image[]
+  -endlessButton : Button
+  -endlessStatusText : TMP_Text
+  -selectedLevelIndex : int
+  +CurrentMode : LevelPlayMode
+  +NextLevel() : void
+  +PreviousLevel() : void
+  +LoadSelectedLevel() : void
+  +CompleteCurrentLevel() : void
+  +GetCurrentSceneLevelId() : string
+  +TryLoadNextLevelFromCurrentScene() : bool
+  +RefreshUI() : void
+  +LoadEndlessMode() : void
+  +IsSelectedLevelEndlessUnlocked() : bool
+}
+
+class LevelEntry {
+  +levelId : string
+  +displayName : string
+  +sceneName : string
+}
+
+enum LevelPlayMode {
+  Campaign
+  Endless
+}
+
+class TowerData {
+  +towerId : string
+  +prefab : GameObject
+  +cost : int
+  +unlockAfterCompletedLevels : int
+}
+
+class SceneController {
+  +Instance : SceneController
+  +firstLevelScene : string
+  +mainMenuScene : string
+  +LoadScene(sceneName : string) : void
+  +ReloadCurrentScene() : void
+  +LoadMainMenu() : void
+  +LoadFirstLevel() : void
+  +LoadNextScene() : void
+  +LoadNextSceneFromWin() : void
+  +RetryLevel() : void
+  +QuitGame() : void
+}
+
+ProgressManager *-down- PlayerProgressData
+PlayerProgressData *-down- LevelMedalProgress
+LevelManager *-down- LevelEntry
+LevelManager --> LevelPlayMode
+LevelManager --> ProgressManager
+LevelManager --> SceneController
+ProgressManager --> TowerData
+
+@enduml

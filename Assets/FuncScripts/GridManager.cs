@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
+    public static GridManager Instance;
+
     [Header("Grid Settings")]
     public int width = 13;
     public int height = 10;
@@ -11,12 +13,15 @@ public class GridManager : MonoBehaviour
     public Vector2 origin = Vector2.zero;
 
     private bool[,] pathCells;
+    private bool[,] blockedCells;
     private bool[,] occupied;
 
     void Awake()
     {
+        Instance = this;
         occupied = new bool[width, height];
         pathCells = new bool[width, height];
+        blockedCells = new bool[width, height];
     }
 
     // ---------- WORLD GRID ----------
@@ -44,12 +49,17 @@ public class GridManager : MonoBehaviour
 
     public bool IsOccupied(Vector2Int gridPos)
     {
-        return occupied[gridPos.x, gridPos.y] || pathCells[gridPos.x, gridPos.y];
+        return occupied[gridPos.x, gridPos.y] || pathCells[gridPos.x, gridPos.y] || blockedCells[gridPos.x, gridPos.y];
     }
 
     public void SetPath(Vector2Int gridPos)
     {
         pathCells[gridPos.x, gridPos.y] = true;
+    }
+
+    public void SetPlacementBlocked(Vector2Int gridPos)
+    {
+        blockedCells[gridPos.x, gridPos.y] = true;
     }
 
     public void SetOccupied(Vector2Int gridPos, bool value)
@@ -65,6 +75,53 @@ public class GridManager : MonoBehaviour
             Vector2 end = waypoints[i + 1].position;
 
             BlockLine(start, end);
+        }
+    }
+
+    public void BlockObstacleFromWaypoints(Transform[] waypoints)
+    {
+        BlockObstacleFromWaypoints(waypoints, cellSize);
+    }
+
+    public void BlockObstacleFromWaypoints(Transform[] waypoints, float worldWidth)
+    {
+        if (waypoints == null || waypoints.Length == 0)
+            return;
+
+        if (waypoints.Length == 1)
+        {
+            BlockObstaclePoint(waypoints[0].position, worldWidth);
+            return;
+        }
+
+        for (int i = 0; i < waypoints.Length - 1; i++)
+        {
+            Vector2 start = waypoints[i].position;
+            Vector2 end = waypoints[i + 1].position;
+
+            BlockWideLine(start, end, worldWidth);
+        }
+    }
+
+    void BlockObstaclePoint(Vector2 point, float worldWidth)
+    {
+        Vector2Int centerGrid = WorldToGrid(point);
+        int radiusInCells = Mathf.Max(1, Mathf.CeilToInt((worldWidth * 0.5f) / cellSize));
+
+        for (int x = centerGrid.x - radiusInCells; x <= centerGrid.x + radiusInCells; x++)
+        {
+            for (int y = centerGrid.y - radiusInCells; y <= centerGrid.y + radiusInCells; y++)
+            {
+                Vector2Int gridPos = new Vector2Int(x, y);
+                if (!IsInsideGrid(gridPos))
+                    continue;
+
+                Vector2 cellCenter = GridToWorld(gridPos);
+                if (Vector2.Distance(cellCenter, point) > Mathf.Max(cellSize * 0.5f, worldWidth * 0.5f))
+                    continue;
+
+                SetPlacementBlocked(gridPos);
+            }
         }
     }
 
@@ -95,6 +152,46 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    void BlockWideLine(Vector2 start, Vector2 end, float worldWidth)
+    {
+        Vector2 min = Vector2.Min(start, end) - Vector2.one * (worldWidth * 0.5f + cellSize);
+        Vector2 max = Vector2.Max(start, end) + Vector2.one * (worldWidth * 0.5f + cellSize);
+
+        Vector2Int minGrid = WorldToGrid(min);
+        Vector2Int maxGrid = WorldToGrid(max);
+        float radius = Mathf.Max(cellSize * 0.5f, worldWidth * 0.5f);
+
+        for (int x = minGrid.x; x <= maxGrid.x; x++)
+        {
+            for (int y = minGrid.y; y <= maxGrid.y; y++)
+            {
+                Vector2Int gridPos = new Vector2Int(x, y);
+                if (!IsInsideGrid(gridPos))
+                    continue;
+
+                Vector2 cellCenter = GridToWorld(gridPos);
+                float dist = DistancePointToSegment(cellCenter, start, end);
+                if (dist > radius)
+                    continue;
+
+                SetPlacementBlocked(gridPos);
+            }
+        }
+    }
+
+    float DistancePointToSegment(Vector2 point, Vector2 start, Vector2 end)
+    {
+        Vector2 segment = end - start;
+        float sqrLength = segment.sqrMagnitude;
+
+        if (sqrLength <= Mathf.Epsilon)
+            return Vector2.Distance(point, start);
+
+        float t = Mathf.Clamp01(Vector2.Dot(point - start, segment) / sqrLength);
+        Vector2 projection = start + segment * t;
+        return Vector2.Distance(point, projection);
+    }
+
 
 
     // ---------- DEBUG VISUAL ----------
@@ -105,6 +202,7 @@ public class GridManager : MonoBehaviour
 
         Color gridColor = Color.gray;
         Color pathColor = new Color(0.5f, 0f, 0f, 0.6f);
+        Color blockedColor = new Color(0.25f, 0.25f, 0.25f, 0.6f);
 
         for (int x = 0; x < width; x++)
         {
@@ -118,7 +216,12 @@ public class GridManager : MonoBehaviour
 
                 Vector3 size = Vector3.one * cellSize;
 
-                if (pathCells != null && pathCells[x, y])
+                if (blockedCells != null && blockedCells[x, y])
+                {
+                    Gizmos.color = blockedColor;
+                    Gizmos.DrawCube(center, size);
+                }
+                else if (pathCells != null && pathCells[x, y])
                 {
                     Gizmos.color = pathColor;
                     Gizmos.DrawCube(center, size);

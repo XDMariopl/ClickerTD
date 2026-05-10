@@ -1,0 +1,138 @@
+@startuml
+title ClickerTD Klašu Diagramma - Karte Un UI
+
+skinparam linetype ortho
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam ranksep 70
+skinparam nodesep 55
+
+top to bottom direction
+
+class GridManager {
+  +Instance : GridManager
+  +width : int
+  +height : int
+  +cellSize : float
+  +origin : Vector2
+  +WorldToGrid(worldPos : Vector2) : Vector2Int
+  +GridToWorld(gridPos : Vector2Int) : Vector2
+  +IsInsideGrid(gridPos : Vector2Int) : bool
+  +IsOccupied(gridPos : Vector2Int) : bool
+  +SetPath(gridPos : Vector2Int) : void
+  +SetPlacementBlocked(gridPos : Vector2Int) : void
+  +SetOccupied(gridPos : Vector2Int, value : bool) : void
+  +BlockPathFromWaypoints(waypoints : Transform[]) : void
+  +BlockObstacleFromWaypoints(waypoints : Transform[]) : void
+  +BlockObstacleFromWaypoints(waypoints : Transform[], worldWidth : float) : void
+  +GetMouseGridPosition(cam : Camera) : Vector2Int
+}
+
+class Path {
+  +Waypoints : Transform[]
+  +width : float
+  +pathColor : Color
+}
+
+class ObstaclePath {
+  +Waypoints : Transform[]
+  +width : float
+  +obstacleColor : Color
+}
+
+class LevelInitializer {
+  +grid : GridManager
+  +path : Path
+  +obstacles : ObstaclePath[]
+}
+
+class ClickManager {
+  -cursor : PlayerCursor
+}
+
+class PlayerCursor {
+  +baseDamage : int
+  -effects : List<IHitEffect>
+  -effectParticlePrefab : ParticleSystem
+  +RegisterEffect(effect : IHitEffect) : void
+  +UnregisterEffect(effect : IHitEffect) : void
+  +HitEnemy(enemy : EnemyHealth) : void
+  +TriggerEffectParticles(effectSprite : Sprite, worldPosition : Vector3) : void
+}
+
+class MoneySystem {
+  +Instance : MoneySystem
+  +startMoney : int
+  -currentMoney : int
+  -totalCollected : int
+  -totalSpent : int
+  +CanAfford(amount : int) : bool
+  +AddMoney(amount : int) : void
+  +SpendMoney(amount : int) : bool
+  +CurrentMoney() : int
+  +TotalCollected() : int
+  +TotalSpent() : int
+}
+
+class PlayerHealth {
+  +Instance : PlayerHealth
+  +maxHealth : int
+  -currentHealth : int
+  -isDead : bool
+  +TakeDamage(amount : int) : void
+  +CurrentHealth() : int
+  +LostLives() : int
+}
+
+class WinLoseUI {
+  +Instance : WinLoseUI
+  +ShowLose(losingRound : int, spent : int, collected : int) : void
+  +ShowWin(lostLives : int, spent : int, collected : int) : void
+}
+
+class ScenePauseManager {
+  +Instance : ScenePauseManager
+  +IsSoftPaused : bool
+  +IsHardPaused : bool
+  +ToggleSoftPause() : void
+  +EnterSoftPauseExternal() : void
+  +ExitSoftPauseExternal() : void
+  +EnterHardPause() : void
+  +ExitHardPause() : void
+}
+
+class SceneController {
+  +Instance : SceneController
+  +firstLevelScene : string
+  +mainMenuScene : string
+  +LoadScene(sceneName : string) : void
+  +ReloadCurrentScene() : void
+  +LoadMainMenu() : void
+  +LoadFirstLevel() : void
+  +LoadNextScene() : void
+  +LoadNextSceneFromWin() : void
+  +RetryLevel() : void
+  +QuitGame() : void
+}
+
+class RoundManager
+class EnemyHealth
+interface IHitEffect
+
+GridManager -down-> Path
+GridManager -down-> ObstaclePath
+LevelInitializer -down-> GridManager
+LevelInitializer -down-> Path
+LevelInitializer -down-> ObstaclePath
+
+ClickManager -down-> PlayerCursor
+PlayerCursor -down-> IHitEffect
+PlayerCursor -down-> EnemyHealth
+
+PlayerHealth -down-> RoundManager
+PlayerHealth -down-> WinLoseUI
+WinLoseUI -down-> ScenePauseManager
+SceneController -down-> ScenePauseManager
+
+@enduml

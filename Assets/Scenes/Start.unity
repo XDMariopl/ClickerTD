@@ -1216,7 +1216,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Every 4rd hit explodes.
+  m_text: 'Every 3rd hit explodes.
 
     Explosion DMG 11'
   m_isRightToLeft: 0
@@ -18906,6 +18906,12 @@ MonoBehaviour:
   - levelId: 2
     displayName: Level 2
     sceneName: Map2
+  - levelId: 3
+    displayName: Level 3
+    sceneName: Map3
+  - levelId: 4
+    displayName: Level 4
+    sceneName: Map4
   levelNameText: {fileID: 514056109}
   levelStatusText: {fileID: 0}
   previousButton: {fileID: 1950857541}

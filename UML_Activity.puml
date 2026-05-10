@@ -1,31 +1,70 @@
 @startuml
+title ClickerTD Aktivitāšu Diagramma
+
+skinparam linetype ortho
+skinparam shadowing false
+skinparam ranksep 65
+skinparam nodesep 45
 skinparam activity {
   BackgroundColor #F5F5F5
   BorderColor #333333
 }
 
 start
-:Load Level Scene;
-:Initialize Grid & Path;
-:Start Round Loop;
-repeat
-  :Spawn Enemies;
-  repeat
-    :Player Clicks Enemy;
-    :Apply Hit Effects;
-    :Deal Damage;
-  repeat while (Enemies alive?) is (yes)
-  :Wait Between Rounds;
-repeat while (More rounds?) is (yes)
+:Ielādēt saglabāto progresu;
+:Atvērt līmeņu izvēli;
+:Izvēlēties karti;
 
-if (Player HP <= 0?) then (yes)
-  :Show Lose Panel;
-  :Soft Pause;
-  stop
-else (no)
-  :Show Win Panel;
-  :Soft Pause;
-  stop
+if (Sākt kampaņu?) then (jā)
+  :Iestatīt režīmu = Kampaņa;
+  :Ielādēt izvēlētās kartes līmeni;
+  :Inicializēt režģi, ceļu un šķēršļus;
+  :Atbloķēt pirmo līmeni, ja vajag;
+  repeat
+    :Izveidot kampaņas vilni;
+    repeat
+      :Spēlētājs izvēlas / novieto / uzlabo torņus;
+      :Spēlētājs klikšķina uz pretinieka;
+      :Pielietot tiešo trāpījuma bojājumu;
+      if (Torņa efekts aktivizējas?) then (jā)
+        :Pielietot torņa efektu;
+        :Izveidot efekta daļiņas;
+      endif
+    repeat while (Palikuši pretinieki?) is (jā)
+    :Gaidīt starp raundiem;
+  repeat while (Ir vēl kampaņas raundi?) is (jā)
+  :Pabeigt līmeni;
+  :Atbloķēt nākamo līmeni;
+  :Piešķirt 1. medaļas pakāpi;
+  :Saglabāt progresu;
+  :Parādīt uzvaras paneli;
+else (nē)
+  :Iestatīt režīmu = Bezgalīgais;
+  :Ielādēt izvēlētās kartes līmeni;
+  :Inicializēt režģi, ceļu un šķēršļus;
+  repeat
+    :Palielināt bezgalīgo raundu;
+    :Aprēķināt raunda budžetu;
+    :Izvēlēties pieejamos pretinieku tipus;
+    :Pēc izvēles pievienot modifikatoru pēc cenas un svara;
+    :Izveidot bezgalīgo vilni;
+    :Saglabāt labāko bezgalīgo raundu;
+    if (Raunds >= 25 / 45 / 80?) then (jā)
+      :Piešķirt 2.-4. medaļas pakāpi;
+      :Saglabāt progresu;
+    endif
+    repeat
+      :Spēlētājs klikšķina uz pretinieka;
+      :Apstrādāt torņu efektus un modifikatorus;
+    repeat while (Palikuši pretinieki?) is (jā)
+    :Gaidīt starp raundiem;
+  repeat while (Spēlētājs dzīvs?) is (jā)
 endif
 
+if (Spēlētājs zaudē?) then (jā)
+  :Parādīt zaudējuma paneli;
+  :Saglabāt progresu;
+endif
+
+stop
 @enduml

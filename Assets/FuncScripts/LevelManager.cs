@@ -10,6 +10,7 @@ public class LevelEntry
     public string levelId;
     public string displayName;
     public string sceneName;
+    public Sprite previewImage;
 }
 
 public enum LevelPlayMode
@@ -31,6 +32,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Button previousButton;
     [SerializeField] private Button nextButton;
     [SerializeField] private Button loadButton;
+    [SerializeField] private Image levelPreviewImage;
     [SerializeField] private Image[] medalImages;
 
     [Header("Medal Colors")]
@@ -49,6 +51,8 @@ public class LevelManager : MonoBehaviour
         if (Instance != null && Instance != this)
         {
             Instance.CopyBindingsFrom(this);
+            Instance.BindCopiedButtons();
+            Instance.EnsureInitialLevelUnlock();
             Instance.RefreshUI();
             Destroy(gameObject);
             return;
@@ -97,6 +101,7 @@ public class LevelManager : MonoBehaviour
             return;
 
         CurrentMode = LevelPlayMode.Campaign;
+        ScenePauseManager.Instance?.ExitPauseForSceneLoad();
         Time.timeScale = 1f;
         SceneManager.LoadScene(level.sceneName);
     }
@@ -166,6 +171,12 @@ public class LevelManager : MonoBehaviour
         if (levelNameText != null)
             levelNameText.text = string.IsNullOrWhiteSpace(level.displayName) ? level.sceneName : level.displayName;
 
+        if (levelPreviewImage != null)
+        {
+            levelPreviewImage.sprite = level.previewImage;
+            levelPreviewImage.enabled = level.previewImage != null;
+        }
+
         if (levelStatusText != null)
         {
             if (!unlocked)
@@ -213,6 +224,7 @@ public class LevelManager : MonoBehaviour
             return;
 
         CurrentMode = LevelPlayMode.Endless;
+        ScenePauseManager.Instance?.ExitPauseForSceneLoad();
         Time.timeScale = 1f;
         SceneManager.LoadScene(level.sceneName);
     }
@@ -251,11 +263,27 @@ public class LevelManager : MonoBehaviour
         previousButton = other.previousButton;
         nextButton = other.nextButton;
         loadButton = other.loadButton;
+        levelPreviewImage = other.levelPreviewImage;
         endlessButton = other.endlessButton;
         endlessStatusText = other.endlessStatusText;
         medalImages = other.medalImages;
         activeMedalColor = other.activeMedalColor;
         inactiveMedalColor = other.inactiveMedalColor;
+    }
+
+    private void BindCopiedButtons()
+    {
+        if (previousButton != null)
+            previousButton.onClick.AddListener(PreviousLevel);
+
+        if (nextButton != null)
+            nextButton.onClick.AddListener(NextLevel);
+
+        if (loadButton != null)
+            loadButton.onClick.AddListener(LoadSelectedLevel);
+
+        if (endlessButton != null)
+            endlessButton.onClick.AddListener(LoadEndlessMode);
     }
 
     private void RefreshMedalVisuals(string levelId)

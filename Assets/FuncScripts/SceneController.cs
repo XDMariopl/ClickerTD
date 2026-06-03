@@ -28,12 +28,14 @@ public class SceneController : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
+        ScenePauseManager.Instance?.ExitPauseForSceneLoad();
         Time.timeScale = 1f;
         SceneManager.LoadScene(sceneName);
     }
 
     public void ReloadCurrentScene()
     {
+        ScenePauseManager.Instance?.ExitPauseForSceneLoad();
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
@@ -56,6 +58,8 @@ public class SceneController : MonoBehaviour
 
     public void LoadNextScene()
     {
+        ScenePauseManager.Instance?.ExitPauseForSceneLoad();
+
         if (LevelManager.Instance != null && LevelManager.Instance.TryLoadNextLevelFromCurrentScene())
             return;
 
@@ -68,13 +72,13 @@ public class SceneController : MonoBehaviour
 
     public void LoadNextSceneFromWin()
     {
-        ScenePauseManager.Instance.ExitHardPause();
+        ScenePauseManager.Instance?.ExitPauseForSceneLoad();
         LoadNextScene();
     }
 
     public void RetryLevel()
     {
-        ScenePauseManager.Instance.ExitHardPause();
+        ScenePauseManager.Instance?.ExitPauseForSceneLoad();
         ReloadCurrentScene();
     }
 

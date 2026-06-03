@@ -27,6 +27,12 @@ public class WinLoseUI : MonoBehaviour
             losePanel.SetActive(false);
     }
 
+    void OnDestroy()
+    {
+        if (Instance == this)
+            Instance = null;
+    }
+
     public void ShowLose(int losingRound, int spent, int collected)
     {
         if (losePanel != null)

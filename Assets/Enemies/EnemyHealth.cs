@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -17,10 +18,13 @@ public class EnemyHealth : MonoBehaviour
     private int incomingHitAttempts = 0;
     private SpriteRenderer[] spriteRenderers;
     private Color[] baseColors;
+    private Graphic[] graphics;
+    private Color[] baseGraphicColors;
     private Color[] modifierColors = System.Array.Empty<Color>();
     private float modifierColorTimer = 0f;
     private int modifierColorIndex = 0;
     private MaterialPropertyBlock colorBlock;
+    private bool renderersCached = false;
 
     void Awake()
     {
@@ -109,15 +113,22 @@ public class EnemyHealth : MonoBehaviour
 
     void CacheRenderers()
     {
-        if (spriteRenderers != null && spriteRenderers.Length > 0)
+        if (renderersCached)
             return;
 
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
         baseColors = new Color[spriteRenderers.Length];
+        graphics = GetComponentsInChildren<Graphic>(true);
+        baseGraphicColors = new Color[graphics.Length];
         colorBlock = new MaterialPropertyBlock();
 
         for (int i = 0; i < spriteRenderers.Length; i++)
             baseColors[i] = spriteRenderers[i].color;
+
+        for (int i = 0; i < graphics.Length; i++)
+            baseGraphicColors[i] = graphics[i].color;
+
+        renderersCached = true;
     }
 
     void BuildModifierColors()
@@ -160,37 +171,65 @@ public class EnemyHealth : MonoBehaviour
     void ApplyColorToRenderers(Color color)
     {
         if (spriteRenderers == null)
-            return;
+            CacheRenderers();
 
-        for (int i = 0; i < spriteRenderers.Length; i++)
+        if (spriteRenderers != null)
         {
-            if (spriteRenderers[i] == null)
-                continue;
+            for (int i = 0; i < spriteRenderers.Length; i++)
+            {
+                if (spriteRenderers[i] == null)
+                    continue;
 
-            spriteRenderers[i].color = color;
-            spriteRenderers[i].GetPropertyBlock(colorBlock);
-            colorBlock.SetColor("_Color", color);
-            colorBlock.SetColor("_BaseColor", color);
-            spriteRenderers[i].SetPropertyBlock(colorBlock);
+                spriteRenderers[i].color = color;
+                spriteRenderers[i].GetPropertyBlock(colorBlock);
+                colorBlock.SetColor("_Color", color);
+                colorBlock.SetColor("_BaseColor", color);
+                spriteRenderers[i].SetPropertyBlock(colorBlock);
+            }
+        }
+
+        if (graphics != null)
+        {
+            for (int i = 0; i < graphics.Length; i++)
+            {
+                if (graphics[i] == null)
+                    continue;
+
+                graphics[i].color = color;
+            }
         }
     }
 
     void RestoreBaseColors()
     {
         if (spriteRenderers == null || baseColors == null)
-            return;
+            CacheRenderers();
 
-        for (int i = 0; i < spriteRenderers.Length; i++)
+        if (spriteRenderers != null && baseColors != null)
         {
-            if (spriteRenderers[i] == null)
-                continue;
+            for (int i = 0; i < spriteRenderers.Length; i++)
+            {
+                if (spriteRenderers[i] == null)
+                    continue;
 
-            Color restoredColor = i < baseColors.Length ? baseColors[i] : Color.white;
-            spriteRenderers[i].color = restoredColor;
-            spriteRenderers[i].GetPropertyBlock(colorBlock);
-            colorBlock.SetColor("_Color", restoredColor);
-            colorBlock.SetColor("_BaseColor", restoredColor);
-            spriteRenderers[i].SetPropertyBlock(colorBlock);
+                Color restoredColor = i < baseColors.Length ? baseColors[i] : Color.white;
+                spriteRenderers[i].color = restoredColor;
+                spriteRenderers[i].GetPropertyBlock(colorBlock);
+                colorBlock.SetColor("_Color", restoredColor);
+                colorBlock.SetColor("_BaseColor", restoredColor);
+                spriteRenderers[i].SetPropertyBlock(colorBlock);
+            }
+        }
+
+        if (graphics != null && baseGraphicColors != null)
+        {
+            for (int i = 0; i < graphics.Length; i++)
+            {
+                if (graphics[i] == null)
+                    continue;
+
+                graphics[i].color = i < baseGraphicColors.Length ? baseGraphicColors[i] : Color.white;
+            }
         }
     }
 

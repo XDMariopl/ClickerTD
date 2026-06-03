@@ -483,6 +483,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grid: {fileID: 54379862}
   path: {fileID: 123849337}
+  obstacles: []
 --- !u!114 &44334869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -554,6 +555,77 @@ MonoBehaviour:
       modifiers: 0
     - prefab: {fileID: 5728208583360428049, guid: 64e683d1c64e54546b9a30292487818b, type: 3}
       count: 10
+      modifiers: 0
+  - enemies:
+    - prefab: {fileID: 5696867637349669123, guid: 5e20ca4bf1b1de949965513a985414bf, type: 3}
+      count: 10
+      modifiers: 0
+    - prefab: {fileID: 5728208583360428049, guid: 64e683d1c64e54546b9a30292487818b, type: 3}
+      count: 10
+      modifiers: 0
+    - prefab: {fileID: 6533424651477324709, guid: d0b892912a15ea74e849acafe8e9951c, type: 3}
+      count: 5
+      modifiers: 0
+    - prefab: {fileID: 5696867637349669123, guid: 5e20ca4bf1b1de949965513a985414bf, type: 3}
+      count: 10
+      modifiers: 0
+  - enemies:
+    - prefab: {fileID: 5696867637349669123, guid: 5e20ca4bf1b1de949965513a985414bf, type: 3}
+      count: 10
+      modifiers: 0
+    - prefab: {fileID: 6533424651477324709, guid: 826bbd0be5869aa4eb14f9fcf59227c9, type: 3}
+      count: 10
+      modifiers: 0
+    - prefab: {fileID: 5728208583360428049, guid: 4585ff4949e7c0f48b11d70106533721, type: 3}
+      count: 5
+      modifiers: 0
+    - prefab: {fileID: 6533424651477324709, guid: d0b892912a15ea74e849acafe8e9951c, type: 3}
+      count: 10
+      modifiers: 0
+  - enemies:
+    - prefab: {fileID: 5696867637349669123, guid: 5e20ca4bf1b1de949965513a985414bf, type: 3}
+      count: 10
+      modifiers: 0
+    - prefab: {fileID: 6533424651477324709, guid: 6aa289a03ad0f5e4a85318e9b5b94d04, type: 3}
+      count: 10
+      modifiers: 0
+    - prefab: {fileID: 5696867637349669123, guid: 5e20ca4bf1b1de949965513a985414bf, type: 3}
+      count: 10
+      modifiers: 0
+    - prefab: {fileID: 6533424651477324709, guid: 6aa289a03ad0f5e4a85318e9b5b94d04, type: 3}
+      count: 10
+      modifiers: 0
+  - enemies:
+    - prefab: {fileID: 5728208583360428049, guid: 4585ff4949e7c0f48b11d70106533721, type: 3}
+      count: 10
+      modifiers: 0
+    - prefab: {fileID: 6533424651477324709, guid: 826bbd0be5869aa4eb14f9fcf59227c9, type: 3}
+      count: 10
+      modifiers: 0
+    - prefab: {fileID: 5696867637349669123, guid: 5e20ca4bf1b1de949965513a985414bf, type: 3}
+      count: 10
+      modifiers: 0
+    - prefab: {fileID: 6533424651477324709, guid: d42e5fac01d832840b76f0ae2136e1d6, type: 3}
+      count: 5
+      modifiers: 0
+  - enemies:
+    - prefab: {fileID: 6533424651477324709, guid: d42e5fac01d832840b76f0ae2136e1d6, type: 3}
+      count: 5
+      modifiers: 0
+    - prefab: {fileID: 5696867637349669123, guid: 5e20ca4bf1b1de949965513a985414bf, type: 3}
+      count: 10
+      modifiers: 0
+    - prefab: {fileID: 5728208583360428049, guid: 4585ff4949e7c0f48b11d70106533721, type: 3}
+      count: 10
+      modifiers: 0
+    - prefab: {fileID: 6533424651477324709, guid: 6aa289a03ad0f5e4a85318e9b5b94d04, type: 3}
+      count: 5
+      modifiers: 0
+    - prefab: {fileID: 6533424651477324709, guid: d42e5fac01d832840b76f0ae2136e1d6, type: 3}
+      count: 5
+      modifiers: 0
+    - prefab: {fileID: 6533424651477324709, guid: 6aa289a03ad0f5e4a85318e9b5b94d04, type: 3}
+      count: 5
       modifiers: 0
   delayBetweenRounds: 4
   endlessConfig: {fileID: 11400000, guid: b696cd4ca6e412c4eb9b53ff22fad4ca, type: 2}
@@ -961,7 +1033,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   width: 1
-  pathColor: {r: 0.5, g: 0, b: 0, a: 0.5882353}
+  pathColor: {r: 0.5, g: 0, b: 0, a: 0}
 --- !u!4 &123849338
 Transform:
   m_ObjectHideFlags: 0
@@ -4249,8 +4321,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -256.39996, y: 0}
+  m_SizeDelta: {x: -512.8, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1083648907
 MonoBehaviour:
@@ -4265,15 +4337,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.26432893, g: 0.3451541, b: 0.41509432, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: -4118689495681347844, guid: e3d369041b575a44293c761205deebdc, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -4373,6 +4445,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 44334866}
+        m_TargetAssemblyTypeName: ScenePauseManager, Assembly-CSharp
+        m_MethodName: ToggleSoftPause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 7456140025238484150, guid: e8a88c610ffefab4b98f049fb51674b4, type: 3}
         m_TargetAssemblyTypeName: SceneController, Assembly-CSharp
         m_MethodName: LoadMainMenu

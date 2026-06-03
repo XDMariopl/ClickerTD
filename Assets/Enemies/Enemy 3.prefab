@@ -62,16 +62,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.754717, g: 0.73493797, b: 0.18155926, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
+  m_Sprite: {fileID: -860468679390908754, guid: a25f42a3ee4303141999bc5ef885279b, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -110,7 +110,7 @@ CircleCollider2D:
     serializedVersion: 2
     m_Bits: 4294967295
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
@@ -130,6 +130,10 @@ MonoBehaviour:
   maxHP: 20
   damageToPlayer: 5
   moneyDrop: 16
+  doubleHealthColor: {r: 1, g: 0, b: 0, a: 1}
+  secondHitsColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  towerEffectOnlyColor: {r: 0.6, g: 0.2, b: 1, a: 1}
+  modifierColorSwitchInterval: 0.6
 --- !u!114 &679823039450496028
 MonoBehaviour:
   m_ObjectHideFlags: 0

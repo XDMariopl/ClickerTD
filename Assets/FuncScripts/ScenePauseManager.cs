@@ -18,6 +18,12 @@ public class ScenePauseManager : MonoBehaviour
         Instance = this;
     }
 
+    void OnDestroy()
+    {
+        if (Instance == this)
+            Instance = null;
+    }
+
     void Update()
     {
         // Soft pause input (ESC)
@@ -82,5 +88,12 @@ public class ScenePauseManager : MonoBehaviour
         IsHardPaused = false;
         Time.timeScale = 1f;
         Debug.Log("Exit Hard Pause");
+    }
+
+    public void ExitPauseForSceneLoad()
+    {
+        IsSoftPaused = false;
+        IsHardPaused = false;
+        Time.timeScale = 1f;
     }
 }

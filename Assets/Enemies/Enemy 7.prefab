@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 679823039450496028}
   - component: {fileID: 6533424651477324709}
   m_Layer: 5
-  m_Name: Enemy 4
+  m_Name: Enemy 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69,7 +69,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -7945901444079236628, guid: a25f42a3ee4303141999bc5ef885279b, type: 3}
+  m_Sprite: {fileID: 8414478535512612329, guid: a25f42a3ee4303141999bc5ef885279b, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -127,9 +127,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6da1e9d36a571044884e698a761d5b30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 3
-  damageToPlayer: 8
-  moneyDrop: 16
+  maxHP: 40
+  damageToPlayer: 10
+  moneyDrop: 32
   doubleHealthColor: {r: 1, g: 0, b: 0, a: 1}
   secondHitsColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   towerEffectOnlyColor: {r: 0.6, g: 0.2, b: 1, a: 1}
@@ -158,4 +158,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e417e48170d0ac44bd62b88adac8ade, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 1.8

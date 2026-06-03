@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: BaseEndless
   m_EditorClassIdentifier: 
   startingBudget: 15
-  budgetIncreasePerRound: 5
+  budgetIncreasePerRound: 7
   budgetRampEvery: 5
-  extraRampAmount: 10
-  delayBetweenRounds: 4
+  extraRampAmount: 20
+  delayBetweenRounds: 2
   enemyOptions:
   - prefab: {fileID: 5696867637349669123, guid: f9576a725ef38da46a137a68b53c0842, type: 3}
     enemyCost: 1
@@ -26,15 +26,72 @@ MonoBehaviour:
   - prefab: {fileID: 5728208583360428049, guid: 64e683d1c64e54546b9a30292487818b, type: 3}
     enemyCost: 3
     unlockRound: 0
-    lastRound: 0
+    lastRound: 15
     weight: 3
   - prefab: {fileID: 6533424651477324709, guid: 826bbd0be5869aa4eb14f9fcf59227c9, type: 3}
     enemyCost: 4
     unlockRound: 5
-    lastRound: 0
+    lastRound: 20
     weight: 3
   - prefab: {fileID: 6533424651477324709, guid: d0b892912a15ea74e849acafe8e9951c, type: 3}
     enemyCost: 3
     unlockRound: 0
+    lastRound: 15
+    weight: 3
+  - prefab: {fileID: 5696867637349669123, guid: 5e20ca4bf1b1de949965513a985414bf, type: 3}
+    enemyCost: 2
+    unlockRound: 10
+    lastRound: 30
+    weight: 5
+  - prefab: {fileID: 5728208583360428049, guid: 4585ff4949e7c0f48b11d70106533721, type: 3}
+    enemyCost: 3
+    unlockRound: 15
+    lastRound: 35
+    weight: 3
+  - prefab: {fileID: 6533424651477324709, guid: d42e5fac01d832840b76f0ae2136e1d6, type: 3}
+    enemyCost: 4
+    unlockRound: 20
+    lastRound: 40
+    weight: 3
+  - prefab: {fileID: 6533424651477324709, guid: 6aa289a03ad0f5e4a85318e9b5b94d04, type: 3}
+    enemyCost: 3
+    unlockRound: 15
+    lastRound: 35
+    weight: 3
+  - prefab: {fileID: 5696867637349669123, guid: d02e13d598cd61a44986aaa8b7b710e6, type: 3}
+    enemyCost: 2
+    unlockRound: 30
+    lastRound: 0
+    weight: 5
+  - prefab: {fileID: 5728208583360428049, guid: 3b57c67830d6baf4a9c82210901b4537, type: 3}
+    enemyCost: 3
+    unlockRound: 35
     lastRound: 0
     weight: 3
+  - prefab: {fileID: 6533424651477324709, guid: ea55842e37be2724ba19e7e3f18136e1, type: 3}
+    enemyCost: 4
+    unlockRound: 40
+    lastRound: 0
+    weight: 3
+  - prefab: {fileID: 6533424651477324709, guid: 593e9070ae61a6449a2eb76cc771eb79, type: 3}
+    enemyCost: 3
+    unlockRound: 35
+    lastRound: 0
+    weight: 3
+  modifierOptions:
+  - modifiers: 1
+    extraCost: 2
+    unlockRound: 30
+    weight: 2
+  - modifiers: 2
+    extraCost: 3
+    unlockRound: 40
+    weight: 2
+  - modifiers: 4
+    extraCost: 2
+    unlockRound: 45
+    weight: 2
+  - modifiers: -1
+    extraCost: 4
+    unlockRound: 50
+    weight: 2

@@ -15,4 +15,4 @@ MonoBehaviour:
   towerId: 2
   prefab: {fileID: 4996267989437817386, guid: 1df995ef1ce7c92498e81410bcdd8d23, type: 3}
   cost: 150
-  unlockAfterCompletedLevels: 0
+  unlockAfterCompletedLevels: 2

@@ -20,6 +20,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Map4.unity
     guid: fac7ae5ffacd2c44a9aa339137e380c1
+  - enabled: 1
+    path: Assets/Scenes/Map5.unity
+    guid: 7150f801d4447eb40a50f82bcc0c11b4
+  - enabled: 1
+    path: Assets/Scenes/Map6.unity
+    guid: 4583b79d0f9efae489d84238bd6f4856
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

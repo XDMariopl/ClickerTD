@@ -38,6 +38,23 @@ public class TowerBuff : MonoBehaviour
     {
         if (isPreview) return;
 
+        if (ScenePauseManager.Instance != null && ScenePauseManager.Instance.IsPaused)
+        {
+            if (active)
+                Deactivate();
+
+            if (circle != null)
+                circle.enabled = false;
+
+            return;
+        }
+
+        if (cursor == null)
+            cursor = FindFirstObjectByType<PlayerCursor>();
+
+        if (cursor == null || circle == null)
+            return;
+
         float dist = Vector2.Distance(cursor.transform.position, transform.position);
 
         if (dist <= radius && !active)

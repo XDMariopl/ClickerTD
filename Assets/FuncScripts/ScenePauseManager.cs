@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ScenePauseManager : MonoBehaviour
 {
@@ -6,6 +7,7 @@ public class ScenePauseManager : MonoBehaviour
 
     public bool IsSoftPaused { get; private set; }
     public bool IsHardPaused { get; private set; }
+    public bool IsPaused => IsSoftPaused || IsHardPaused;
 
     void Awake()
     {
@@ -16,6 +18,11 @@ public class ScenePauseManager : MonoBehaviour
         }
 
         Instance = this;
+    }
+
+    void Start()
+    {
+        ConfigurePauseOverlaySorting();
     }
 
     void OnDestroy()
@@ -46,6 +53,7 @@ public class ScenePauseManager : MonoBehaviour
 
     void EnterSoftPause()
     {
+        ConfigurePauseOverlaySorting();
         IsSoftPaused = true;
         Time.timeScale = 0f;
         Debug.Log("Soft Pause");
@@ -77,6 +85,7 @@ public class ScenePauseManager : MonoBehaviour
     // ---------- HARD PAUSE ----------
     public void EnterHardPause()
     {
+        ConfigurePauseOverlaySorting();
         IsHardPaused = true;
         IsSoftPaused = false;
         Time.timeScale = 0f;
@@ -95,5 +104,37 @@ public class ScenePauseManager : MonoBehaviour
         IsSoftPaused = false;
         IsHardPaused = false;
         Time.timeScale = 1f;
+    }
+
+    void ConfigurePauseOverlaySorting()
+    {
+        Transform[] transforms = Resources.FindObjectsOfTypeAll<Transform>();
+        foreach (Transform target in transforms)
+        {
+            if (target == null || !target.gameObject.scene.IsValid())
+                continue;
+
+            if (!IsPauseOverlay(target.name))
+                continue;
+
+            Canvas canvas = target.GetComponent<Canvas>();
+            if (canvas == null)
+                canvas = target.gameObject.AddComponent<Canvas>();
+
+            canvas.overrideSorting = true;
+            canvas.sortingOrder = 500;
+
+            if (target.GetComponent<GraphicRaycaster>() == null)
+                target.gameObject.AddComponent<GraphicRaycaster>();
+        }
+    }
+
+    bool IsPauseOverlay(string objectName)
+    {
+        return objectName == "PausePanel" ||
+               objectName == "WinPanel" ||
+               objectName == "MainPause" ||
+               objectName == "WinPause" ||
+               objectName == "LostPause";
     }
 }

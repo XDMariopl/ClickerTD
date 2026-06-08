@@ -11,6 +11,9 @@ public class TowerSelectable : MonoBehaviour
 
     void OnMouseDown()
     {
+        if (ScenePauseManager.Instance != null && ScenePauseManager.Instance.IsPaused)
+            return;
+
         if (TowerUpgradeUI.Instance == null || towerBuff == null)
             return;
 

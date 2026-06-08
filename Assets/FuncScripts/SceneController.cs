@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SceneController : MonoBehaviour
 {
@@ -22,6 +23,29 @@ public class SceneController : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    void OnEnable()
+    {
+        if (Instance == this)
+            SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        if (Instance == this)
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void Start()
+    {
+        if (Instance == this)
+            BindSceneButtons();
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        BindSceneButtons();
     }
 
     // ---------- BASIC LOADS ----------
@@ -84,6 +108,40 @@ public class SceneController : MonoBehaviour
 
     public void QuitGame()
     {
+        PlayerPrefs.Save();
         Application.Quit();
+    }
+
+    private void BindSceneButtons()
+    {
+        Button[] buttons = Resources.FindObjectsOfTypeAll<Button>();
+        foreach (Button button in buttons)
+        {
+            if (button == null || !button.gameObject.scene.IsValid())
+                continue;
+
+            if (!IsUnderNamedParent(button.transform, "QuitPanel"))
+                continue;
+
+            if (button.name != "Yes")
+                continue;
+
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(QuitGame);
+        }
+    }
+
+    private bool IsUnderNamedParent(Transform transformToCheck, string parentName)
+    {
+        Transform current = transformToCheck;
+        while (current != null)
+        {
+            if (current.name == parentName)
+                return true;
+
+            current = current.parent;
+        }
+
+        return false;
     }
 }

@@ -1,37 +1,58 @@
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class AudioSettingsManager : MonoBehaviour
 {
     [Header("Mixer")]
     public AudioMixer audioMixer;
 
+    [Header("Volume Sliders")]
+    [SerializeField] private Slider masterSlider;
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private Slider sfxSlider;
+
     private const string MASTER_KEY = "MasterVolume";
     private const string MUSIC_KEY = "MusicVolume";
     private const string SFX_KEY = "SFXVolume";
 
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
     void Start()
     {
         LoadVolumes();
+        BindVolumeSliders();
     }
 
-    // Slider values expected: 0.0001f > 1f
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        LoadVolumes();
+        BindVolumeSliders();
+    }
+
+    // Slider values expected: 0f to 1f.
     public void SetMasterVolume(float value)
     {
-        audioMixer.SetFloat("MasterVolume", LinearToDb(value));
-        PlayerPrefs.SetFloat(MASTER_KEY, value);
+        SetVolume(MASTER_KEY, "MasterVolume", value);
     }
 
     public void SetMusicVolume(float value)
     {
-        audioMixer.SetFloat("MusicVolume", LinearToDb(value));
-        PlayerPrefs.SetFloat(MUSIC_KEY, value);
+        SetVolume(MUSIC_KEY, "MusicVolume", value);
     }
 
     public void SetSFXVolume(float value)
     {
-        audioMixer.SetFloat("SFXVolume", LinearToDb(value));
-        PlayerPrefs.SetFloat(SFX_KEY, value);
+        SetVolume(SFX_KEY, "SFXVolume", value);
     }
 
     void LoadVolumes()
@@ -43,6 +64,54 @@ public class AudioSettingsManager : MonoBehaviour
         audioMixer.SetFloat("MasterVolume", LinearToDb(master));
         audioMixer.SetFloat("MusicVolume", LinearToDb(music));
         audioMixer.SetFloat("SFXVolume", LinearToDb(sfx));
+    }
+
+    void BindVolumeSliders()
+    {
+        FindVolumeSliders();
+
+        BindSlider(masterSlider, PlayerPrefs.GetFloat(MASTER_KEY, 1f), SetMasterVolume);
+        BindSlider(musicSlider, PlayerPrefs.GetFloat(MUSIC_KEY, 1f), SetMusicVolume);
+        BindSlider(sfxSlider, PlayerPrefs.GetFloat(SFX_KEY, 1f), SetSFXVolume);
+    }
+
+    void FindVolumeSliders()
+    {
+        masterSlider = null;
+        musicSlider = null;
+        sfxSlider = null;
+
+        Slider[] sliders = Resources.FindObjectsOfTypeAll<Slider>();
+        foreach (Slider slider in sliders)
+        {
+            if (slider == null || !slider.gameObject.scene.IsValid())
+                continue;
+
+            if (slider.name == "MasterSlider")
+                masterSlider = slider;
+            else if (slider.name == "MusicSlider")
+                musicSlider = slider;
+            else if (slider.name == "SFXSlider")
+                sfxSlider = slider;
+        }
+    }
+
+    void BindSlider(Slider slider, float savedValue, UnityEngine.Events.UnityAction<float> onChanged)
+    {
+        if (slider == null)
+            return;
+
+        slider.SetValueWithoutNotify(Mathf.Clamp01(savedValue));
+        slider.onValueChanged.RemoveAllListeners();
+        slider.onValueChanged.AddListener(onChanged);
+    }
+
+    void SetVolume(string prefsKey, string mixerParameter, float value)
+    {
+        float clampedValue = Mathf.Clamp01(value);
+        audioMixer.SetFloat(mixerParameter, LinearToDb(clampedValue));
+        PlayerPrefs.SetFloat(prefsKey, clampedValue);
+        PlayerPrefs.Save();
     }
 
     float LinearToDb(float value)

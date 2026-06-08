@@ -18,6 +18,14 @@ public class TowerPlace : MonoBehaviour
     {
         if (!placing) return;
 
+        if (ScenePauseManager.Instance != null && ScenePauseManager.Instance.IsPaused)
+        {
+            if (preview != null)
+                preview.SetActive(false);
+
+            return;
+        }
+
         currentGridPos = grid.GetMouseGridPosition(cam);
 
         if (!grid.IsInsideGrid(currentGridPos))

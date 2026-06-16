@@ -19149,6 +19149,22 @@ MonoBehaviour:
     displayName: Level 6
     sceneName: Map6
     previewImage: {fileID: -4868725291475089888, guid: 70b29f0b0a57b5548a984499a511a094, type: 3}
+  - levelId: 7
+    displayName: Level 7
+    sceneName: Map7
+    previewImage: {fileID: -3781611160216213447, guid: d45b11e39c1b66d4d85ec9c88a92e928, type: 3}
+  - levelId: 8
+    displayName: Level 8
+    sceneName: Map8
+    previewImage: {fileID: -183368667537375825, guid: 25e58d58c3938684eb328343ef0fe754, type: 3}
+  - levelId: 9
+    displayName: Level 9
+    sceneName: Map9
+    previewImage: {fileID: 4696956032938859992, guid: e0c48e46933e5844da809c61ddc6da33, type: 3}
+  - levelId: 10
+    displayName: Level 10
+    sceneName: Map10
+    previewImage: {fileID: 2043944601763671156, guid: 8eec219196ec6f74284e8bf522522d53, type: 3}
   levelNameText: {fileID: 514056109}
   levelStatusText: {fileID: 0}
   previousButton: {fileID: 1950857541}
